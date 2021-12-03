@@ -1,0 +1,195 @@
+---
+title: "Analysis of Framingham Heart Study Using Logistic Regression"
+author: "Report by Matthew Curcio"
+date: "12/2/2021"
+output: html_document
+---
+
+---
+
+## Executive Summary
+
+- The Framingham Heart Study (FHS) is a longitudinal study that investigated **4,133 participants**.
+- The purpose of the FHS is to **determine the risk factors for cardiovascular disease** by following 14 variables.
+
+
+--- 
+
+## Disscussion
+
+The goal of this study is to determine which conditions lead to a high probability of a person obtaining Cardiovascular Disease.  
+
+
+- The `caret` package, short for **C**lassification And **RE**gression **T**raining, was used for analysis.
+- The data is partitioned by `caret` to run 10X fold Cross-fold Validation repeated 5 times.
+- The method is a general linear model (`glm`) using a binomial or Logistic Regression.
+- The dependent variable `TenYearCHD` is an indicator for patients that had cardiovascular disease after 10 years.
+- The model was fit with 14 independent variables.
+
+|   # | Dependent variable | Data Type   |
+| :-- | :----------------- | :---------- |
+|   1 | TenYearCHD         | Factor(0,1) |
+
+|   # | Independent variable | Data Type   |
+| :-- | :------------------- | :---------- |
+|   1 | male1                | Factor(0,1) |
+|   2 | age                  | Continous   |
+|   3 | education1           | Factor(0,1) |
+|   4 | currentSmoker1       | Factor(0,1) |
+|   5 | cigsPerDay           | Continous   |
+|   6 | prevalentStroke1     | Factor(0,1) |
+|   7 | prevalentHyp1        | Factor(0,1) |
+|   8 | diabetes1            | Continous   |
+|   9 | totChol              | Continous   |
+|  10 | sysBP                | Continous   |
+|  11 | diaBP                | Continous   |
+|  12 | BMI                  | Continous   |
+|  13 | heartRate            | Continous   |
+|  14 | glucose              | Continous   |
+
+```{r DONOTSHOW, message=FALSE, warning=FALSE, include=FALSE}
+#DO NOT SHOW
+#Load Libraries
+Libraries <- c("doMC", "knitr", "readr", "tidyverse", "caret", "skimr")
+for (p in Libraries) { 
+    library(p, character.only = TRUE)
+}
+opts_chunk$set(cache=TRUE, warning=FALSE, message=FALSE)
+
+#Load Data
+df <- read_csv("CHD_preprocessed.csv", 
+     col_types = cols(male = col_factor(levels = c("0", "1")), 
+                      education = col_factor(levels = c("0", "1")),
+                      currentSmoker = col_factor(levels = c("0", "1")), 
+                      BPMeds = col_skip(), 
+                      prevalentStroke = col_factor(levels = c("0", "1")), 
+                      prevalentHyp = col_factor(levels = c("0", "1")), 
+                      diabetes = col_factor(levels = c("0", "1")), 
+                      TenYearCHD = col_factor(levels = c("0", "1"))))
+
+# Partition data into training and testing sets
+set.seed(1000)
+index <- createDataPartition(df$TenYearCHD, p = 0.8, list = FALSE)
+training_set <- df[index, ]
+
+# Create model, 10X fold CV repeated 5X
+tcontrol <- trainControl(method = "repeatedcv",
+                         number = 10,
+                         repeats = 5)
+```
+
+---
+
+### Logistic Regression Model Summary
+
+```{r cache=TRUE}
+model_obj <- train(TenYearCHD ~ .,
+                   data = training_set,
+                   trControl = tcontrol,
+                   method = "glm",
+                   family = "binomial")
+
+summary(model_obj)
+```
+
+### Appendix 1 - Load Libraries
+
+```{r message=FALSE, warning=FALSE}
+
+Libraries <- c("knitr", "readr", "tidyverse", "caret", "skimr")
+for (p in Libraries) { 
+    library(p, character.only = TRUE)
+}
+
+opts_chunk$set(cache=TRUE, warning=FALSE, message=FALSE)
+```
+
+### Appendix 2 - Load Data
+
+- The data from the Framingham Heart Study can be found at https://www.kaggle.com/captainozlem/framingham-chd-preprocessed-data.
+
+```{r message=FALSE, warning=FALSE}
+
+df <- read_csv("CHD_preprocessed.csv", 
+     col_types = cols(male = col_factor(levels = c("0", "1")), 
+                      education = col_factor(levels = c("0", "1")),
+                      currentSmoker = col_factor(levels = c("0", "1")), 
+                      BPMeds = col_factor(levels = c("0", "1")), 
+                      prevalentStroke = col_factor(levels = c("0", "1")), 
+                      prevalentHyp = col_factor(levels = c("0", "1")), 
+                      diabetes = col_factor(levels = c("0", "1")), 
+                      TenYearCHD = col_factor(levels = c("0", "1"))))
+#View(df)
+```
+
+### Appendix 3 - Exploratory Data Analysis
+
+- Find data set dimensions 
+
+```{r}
+number_cols = paste("Number of Columns: ", ncol(df), sep = "")
+number_rows = paste("Number of Rows: ", nrow(df), sep = "")
+
+print(number_cols)
+print(number_rows)
+```
+
+- Investigate the data structure
+
+```{r}
+str(df, give.attr=FALSE)
+```
+
+#### Sum all the missing values within the dataframe.
+
+- Inspection of the dataframe shows that there are 4133 missing values.
+- Visual inspection showed that **Blood Pressure Medications was entirely missing**. 
+- *Blood Pressure Medications* feature will be removed.
+
+```{r}
+print(paste("Total number of missing values :", sum(is.na(df))))
+```
+
+#### Remove Blood Pressure Medications(BPMeds) from dataframe.
+
+```{r}
+df_clean <- subset (df, select = -BPMeds)
+
+number_cols = paste("Number of Columns: ", ncol(df_clean), sep = "")
+number_rows = paste("Number of Rows: ", nrow(df_clean), sep = "")
+
+print(number_cols)
+print(number_rows)
+
+print("Display missing values")
+print(paste("Number of missing values", sum(is.na(df_clean))))
+```
+
+
+
+### Exploratory Data Report using the library `skimr`
+
+```{r}
+skim(df_clean)
+```
+
+
+### Appendix 5 - Create Data Partition & Setup Cross-Validation
+
+```{r cache=TRUE}
+# Partition data into training and testing sets
+set.seed(1000)
+index <- createDataPartition(df_clean$TenYearCHD, p = 0.8, list = FALSE)
+training_set <- df_clean[index, ]
+
+# Create model, 10X fold CV repeated 5X
+tcontrol <- trainControl(method = "repeatedcv",
+                         number = 10,
+                         repeats = 5)
+```
+
+
+
+
+
+
