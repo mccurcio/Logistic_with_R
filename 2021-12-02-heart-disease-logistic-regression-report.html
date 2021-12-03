@@ -184,18 +184,18 @@ pre code {
 <h2>Disscussion</h2>
 <p>The goal of this study is to determine which conditions lead to a high probability of a person obtaining Cardiovascular Disease.</p>
 <ul>
-<li>The <code>caret</code> package, short for <strong>C</strong>lassification And <strong>RE</strong>gression <strong>T</strong>raining, was used for analysis.</li>
+<li>The <code>caret</code> package, short for <strong>C</strong>lassification And <strong>RE</strong>gression <strong>T</strong>raining, is used for analysis.</li>
 <li>The data is partitioned by <code>caret</code> to run 10X fold Cross-fold Validation repeated 5 times.</li>
 <li>The method is a general linear model (<code>glm</code>) using a binomial or Logistic Regression.</li>
 <li>The dependent variable <code>TenYearCHD</code> is an indicator for patients that had cardiovascular disease after 10 years.</li>
-<li>The model was fit with 14 independent variables.</li>
+<li>The model is fit with 14 independent variables.</li>
 </ul>
 <table>
 <thead>
 <tr class="header">
 <th align="left">#</th>
 <th align="left">Dependent variable</th>
-<th align="left">Data Type</th>
+<th align="left">Variable Type</th>
 </tr>
 </thead>
 <tbody>
@@ -211,7 +211,7 @@ pre code {
 <tr class="header">
 <th align="left">#</th>
 <th align="left">Independent variable</th>
-<th align="left">Data Type</th>
+<th align="left">Variable Type</th>
 </tr>
 </thead>
 <tbody>
@@ -391,18 +391,18 @@ print(number_cols)</code></pre>
 ##  $ heartRate      : num [1:4133] 80 95 75 65 85 77 60 79 76 93 ...
 ##  $ glucose        : num [1:4133] 77 76 70 103 85 99 85 78 79 88 ...
 ##  $ TenYearCHD     : Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 1 1 1 2 1 1 2 1 1 1 ...</code></pre>
-<div id="sum-all-the-missing-values-within-the-dataframe." class="section level4">
-<h4>Sum all the missing values within the dataframe.</h4>
+<div id="sum-all-the-missing-values-within-the-dataframe." class="section level5">
+<h5>Sum all the missing values within the dataframe.</h5>
 <ul>
-<li>Inspection of the dataframe shows that there are 4133 missing values.</li>
-<li>Visual inspection showed that <strong>Blood Pressure Medications was entirely missing</strong>.</li>
-<li><em>Blood Pressure Medications</em> feature will be removed.</li>
+<li>Inspection of the FHS data shows that there are 4133 missing values.</li>
+<li>Visual inspection shows that <strong>Blood Pressure Medications was entirely missing</strong>.</li>
+<li><em>Blood Pressure Medications</em> feature is removed.</li>
 </ul>
 <pre class="r"><code>print(paste(&quot;Total number of missing values :&quot;, sum(is.na(df))))</code></pre>
 <pre><code>## [1] &quot;Total number of missing values : 4133&quot;</code></pre>
 </div>
-<div id="remove-blood-pressure-medicationsbpmeds-from-dataframe." class="section level4">
-<h4>Remove Blood Pressure Medications(BPMeds) from dataframe.</h4>
+<div id="remove-blood-pressure-medicationsbpmeds-from-the-fhs-data." class="section level4">
+<h4>Remove Blood Pressure Medications(BPMeds) from the FHS data.</h4>
 <pre class="r"><code>df_clean &lt;- subset (df, select = -BPMeds)
 
 number_cols = paste(&quot;Number of Columns: &quot;, ncol(df_clean), sep = &quot;&quot;)
@@ -418,8 +418,8 @@ print(number_cols)</code></pre>
 <pre><code>## [1] &quot;Number of missing values 0&quot;</code></pre>
 </div>
 </div>
-<div id="exploratory-data-report-using-the-library-skimr" class="section level3">
-<h3>Exploratory Data Report using the library <code>skimr</code></h3>
+<div id="exploratory-data-report-using-df_clean-data-and-the-library-skimr" class="section level3">
+<h3>Exploratory Data Report using <code>df_clean</code> data and the library <code>skimr</code></h3>
 <pre class="r"><code>skim(df_clean)</code></pre>
 <table>
 <caption>Data summary</caption>
@@ -658,8 +658,8 @@ print(number_cols)</code></pre>
 </tbody>
 </table>
 </div>
-<div id="appendix-5---create-data-partition-setup-cross-validation" class="section level3">
-<h3>Appendix 5 - Create Data Partition &amp; Setup Cross-Validation</h3>
+<div id="appendix-4---create-data-partition-setup-cross-validation" class="section level3">
+<h3>Appendix 4 - Create Data Partition &amp; Setup Cross-Validation</h3>
 <pre class="r"><code># Partition data into training and testing sets
 set.seed(1000)
 index &lt;- createDataPartition(df_clean$TenYearCHD, p = 0.8, list = FALSE)

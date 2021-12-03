@@ -20,32 +20,32 @@ output: html_document
 The goal of this study is to determine which conditions lead to a high probability of a person obtaining Cardiovascular Disease.  
 
 
-- The `caret` package, short for **C**lassification And **RE**gression **T**raining, was used for analysis.
+- The `caret` package, short for **C**lassification And **RE**gression **T**raining, is used for analysis.
 - The data is partitioned by `caret` to run 10X fold Cross-fold Validation repeated 5 times.
 - The method is a general linear model (`glm`) using a binomial or Logistic Regression.
 - The dependent variable `TenYearCHD` is an indicator for patients that had cardiovascular disease after 10 years.
-- The model was fit with 14 independent variables.
+- The model is fit with 14 independent variables.
 
-|   # | Dependent variable | Data Type   |
-| :-- | :----------------- | :---------- |
-|   1 | TenYearCHD         | Factor(0,1) |
+| #   | Dependent variable | Variable Type |
+| :-- | :----------------- | :------------ |
+| 1   | TenYearCHD         | Factor(0,1)   |
 
-|   # | Independent variable | Data Type   |
-| :-- | :------------------- | :---------- |
-|   1 | male1                | Factor(0,1) |
-|   2 | age                  | Continous   |
-|   3 | education1           | Factor(0,1) |
-|   4 | currentSmoker1       | Factor(0,1) |
-|   5 | cigsPerDay           | Continous   |
-|   6 | prevalentStroke1     | Factor(0,1) |
-|   7 | prevalentHyp1        | Factor(0,1) |
-|   8 | diabetes1            | Continous   |
-|   9 | totChol              | Continous   |
-|  10 | sysBP                | Continous   |
-|  11 | diaBP                | Continous   |
-|  12 | BMI                  | Continous   |
-|  13 | heartRate            | Continous   |
-|  14 | glucose              | Continous   |
+| #   | Independent variable | Variable Type |
+| :-- | :------------------- | :------------ |
+| 1   | male1                | Factor(0,1)   |
+| 2   | age                  | Continous     |
+| 3   | education1           | Factor(0,1)   |
+| 4   | currentSmoker1       | Factor(0,1)   |
+| 5   | cigsPerDay           | Continous     |
+| 6   | prevalentStroke1     | Factor(0,1)   |
+| 7   | prevalentHyp1        | Factor(0,1)   |
+| 8   | diabetes1            | Continous     |
+| 9   | totChol              | Continous     |
+| 10  | sysBP                | Continous     |
+| 11  | diaBP                | Continous     |
+| 12  | BMI                  | Continous     |
+| 13  | heartRate            | Continous     |
+| 14  | glucose              | Continous     |
 
 ```{r DONOTSHOW, message=FALSE, warning=FALSE, include=FALSE}
 #DO NOT SHOW
@@ -109,7 +109,6 @@ opts_chunk$set(cache=TRUE, warning=FALSE, message=FALSE)
 - The data from the Framingham Heart Study can be found at https://www.kaggle.com/captainozlem/framingham-chd-preprocessed-data.
 
 ```{r message=FALSE, warning=FALSE}
-
 df <- read_csv("CHD_preprocessed.csv", 
      col_types = cols(male = col_factor(levels = c("0", "1")), 
                       education = col_factor(levels = c("0", "1")),
@@ -140,17 +139,17 @@ print(number_rows)
 str(df, give.attr=FALSE)
 ```
 
-#### Sum all the missing values within the dataframe.
+##### Sum all the missing values within the dataframe.
 
-- Inspection of the dataframe shows that there are 4133 missing values.
-- Visual inspection showed that **Blood Pressure Medications was entirely missing**. 
-- *Blood Pressure Medications* feature will be removed.
+- Inspection of the FHS data shows that there are 4133 missing values.
+- Visual inspection shows that **Blood Pressure Medications was entirely missing**. 
+- *Blood Pressure Medications* feature is removed.
 
 ```{r}
 print(paste("Total number of missing values :", sum(is.na(df))))
 ```
 
-#### Remove Blood Pressure Medications(BPMeds) from dataframe.
+#### Remove Blood Pressure Medications(BPMeds) from the FHS data.
 
 ```{r}
 df_clean <- subset (df, select = -BPMeds)
@@ -165,16 +164,13 @@ print("Display missing values")
 print(paste("Number of missing values", sum(is.na(df_clean))))
 ```
 
-
-
-### Exploratory Data Report using the library `skimr`
+### Exploratory Data Report using `df_clean` data and the library `skimr`
 
 ```{r}
 skim(df_clean)
 ```
 
-
-### Appendix 5 - Create Data Partition & Setup Cross-Validation
+### Appendix 4 - Create Data Partition & Setup Cross-Validation
 
 ```{r cache=TRUE}
 # Partition data into training and testing sets
