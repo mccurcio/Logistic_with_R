@@ -2,7 +2,7 @@
 title: "Analysis of Framingham Heart Study Using Logistic Regression"
 author: "Report by Matthew Curcio"
 date: "12/2/2021"
-output: html_document
+output: pdf_document
 ---
 
 ---
@@ -49,6 +49,8 @@ The goal of this study is to determine which conditions lead to a high probabili
 
 ```{r DONOTSHOW, message=FALSE, warning=FALSE, include=FALSE}
 #DO NOT SHOW
+options(tinytex.verbose = TRUE)
+
 #Load Libraries
 Libraries <- c("doMC", "knitr", "readr", "tidyverse", "caret", "skimr")
 for (p in Libraries) { 

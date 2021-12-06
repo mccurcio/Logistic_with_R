@@ -12,8 +12,6 @@
 # User-specific files
 .Ruserdata
 
-# Example code in package build process
-*-Ex.R
 
 # Output files from R CMD build
 /*.tar.gz
@@ -41,6 +39,8 @@ vignettes/*.pdf
 # Temporary files created by R markdown
 *.utf8.md
 *.knit.md
+*.tex
+*.log
 
 # R Environment Variables
 .Renviron
