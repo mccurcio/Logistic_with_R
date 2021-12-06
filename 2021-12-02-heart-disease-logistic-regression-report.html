@@ -166,7 +166,7 @@ pre code {
 
 <h1 class="title toc-ignore">Analysis of Framingham Heart Study Using Logistic Regression</h1>
 <h4 class="author">Report by Matthew Curcio</h4>
-<h4 class="date">12/2/2021</h4>
+<h4 class="date">12-02-21</h4>
 
 </div>
 
@@ -178,22 +178,112 @@ pre code {
 <li>The Framingham Heart Study (FHS) is a longitudinal study that investigated <strong>4,133 participants</strong>.</li>
 <li>The purpose of the FHS is to <strong>determine the risk factors for cardiovascular disease</strong> by following 14 variables.</li>
 </ul>
+<table>
+<thead>
+<tr class="header">
+<th align="left"><strong>Variable Importance</strong></th>
+<th align="left">Estimate</th>
+<th align="left">P-value</th>
+<th align="left">Significance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Male</td>
+<td align="left">0.5269778</td>
+<td align="left">3.33e-06</td>
+<td align="left">***</td>
+</tr>
+<tr class="even">
+<td align="left">Age</td>
+<td align="left">0.0601825</td>
+<td align="left">&lt; 2e-16</td>
+<td align="left">***</td>
+</tr>
+<tr class="odd">
+<td align="left">Systolic BP</td>
+<td align="left">0.0132616</td>
+<td align="left">0.00074</td>
+<td align="left">***</td>
+</tr>
+<tr class="even">
+<td align="left">Cigarettes / day</td>
+<td align="left">0.0204103</td>
+<td align="left">0.00180</td>
+<td align="left">**</td>
+</tr>
+<tr class="odd">
+<td align="left">Glucose</td>
+<td align="left">0.0060033</td>
+<td align="left">0.00886</td>
+<td align="left">**</td>
+</tr>
+<tr class="even">
+<td align="left">Total cholesterol</td>
+<td align="left">0.0023762</td>
+<td align="left">0.04977</td>
+<td align="left">*</td>
+</tr>
+<tr class="odd">
+<td align="left">Prevalence of hypertension</td>
+<td align="left">0.3317811</td>
+<td align="left">0.02119</td>
+<td align="left">*</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th align="left"><strong>List of Factors/Variables with low or no significance</strong></th>
+<th align="left">P-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Education</td>
+<td align="left">0.48802</td>
+</tr>
+<tr class="even">
+<td align="left">Current Smoker</td>
+<td align="left">0.97215</td>
+</tr>
+<tr class="odd">
+<td align="left">Prevalence of Stroke</td>
+<td align="left">0.54001</td>
+</tr>
+<tr class="even">
+<td align="left">Diabetes</td>
+<td align="left">0.21588</td>
+</tr>
+<tr class="odd">
+<td align="left">Diastolic BP</td>
+<td align="left">0.89748</td>
+</tr>
+<tr class="even">
+<td align="left">BMI</td>
+<td align="left">0.85959</td>
+</tr>
+<tr class="odd">
+<td align="left">Heart Rate</td>
+<td align="left">0.19139</td>
+</tr>
+</tbody>
+</table>
 <hr />
 </div>
 <div id="disscussion" class="section level2">
 <h2>Disscussion</h2>
-<p>The goal of this study is to determine which conditions lead to a high probability of a person obtaining Cardiovascular Disease.</p>
+<p>The goal of this study is to determine which conditions lead to a high probability of a person acquiring cardiovascular disease.</p>
+<p>Logistic regression is used to understand the relationship between the dependent variable and one or more independent variables by estimating probabilities using a logistic regression equation. This type of analysis can help you predict the likelihood of an event happening or a choice being made. <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <ul>
-<li>The <code>caret</code> package, short for <strong>C</strong>lassification And <strong>RE</strong>gression <strong>T</strong>raining, is used for analysis.</li>
-<li>The data is partitioned by <code>caret</code> to run 10X fold Cross-fold Validation repeated 5 times.</li>
-<li>The method is a general linear model (<code>glm</code>) using a binomial or Logistic Regression.</li>
-<li>The dependent variable <code>TenYearCHD</code> is an indicator for patients that had cardiovascular disease after 10 years.</li>
-<li>The model is fit with 14 independent variables.</li>
+<li><p>The dependent variable is the incidence of acquiring cardiac hear disease (CHD) after ten years from testing. The variable name in this study is abbreviated <code>TenYearCHD</code>.</p></li>
+<li><p>The model is fit with 14 independent variables.</p></li>
 </ul>
 <table>
 <thead>
 <tr class="header">
-<th align="left">#</th>
+<th align="left">No.</th>
 <th align="left">Dependent variable</th>
 <th align="left">Variable Type</th>
 </tr>
@@ -201,7 +291,7 @@ pre code {
 <tbody>
 <tr class="odd">
 <td align="left">1</td>
-<td align="left">TenYearCHD</td>
+<td align="left">CHD Post Ten Year</td>
 <td align="left">Factor(0,1)</td>
 </tr>
 </tbody>
@@ -209,7 +299,7 @@ pre code {
 <table>
 <thead>
 <tr class="header">
-<th align="left">#</th>
+<th align="left">No.</th>
 <th align="left">Independent variable</th>
 <th align="left">Variable Type</th>
 </tr>
@@ -223,7 +313,7 @@ pre code {
 <tr class="even">
 <td align="left">2</td>
 <td align="left">age</td>
-<td align="left">Continous</td>
+<td align="left">Numeric</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
@@ -238,7 +328,7 @@ pre code {
 <tr class="odd">
 <td align="left">5</td>
 <td align="left">cigsPerDay</td>
-<td align="left">Continous</td>
+<td align="left">Numeric</td>
 </tr>
 <tr class="even">
 <td align="left">6</td>
@@ -253,40 +343,48 @@ pre code {
 <tr class="even">
 <td align="left">8</td>
 <td align="left">diabetes1</td>
-<td align="left">Continous</td>
+<td align="left">Numeric</td>
 </tr>
 <tr class="odd">
 <td align="left">9</td>
 <td align="left">totChol</td>
-<td align="left">Continous</td>
+<td align="left">Numeric</td>
 </tr>
 <tr class="even">
 <td align="left">10</td>
 <td align="left">sysBP</td>
-<td align="left">Continous</td>
+<td align="left">Numeric</td>
 </tr>
 <tr class="odd">
 <td align="left">11</td>
 <td align="left">diaBP</td>
-<td align="left">Continous</td>
+<td align="left">Numeric</td>
 </tr>
 <tr class="even">
 <td align="left">12</td>
 <td align="left">BMI</td>
-<td align="left">Continous</td>
+<td align="left">Numeric</td>
 </tr>
 <tr class="odd">
 <td align="left">13</td>
 <td align="left">heartRate</td>
-<td align="left">Continous</td>
+<td align="left">Numeric</td>
 </tr>
 <tr class="even">
 <td align="left">14</td>
 <td align="left">glucose</td>
-<td align="left">Continous</td>
+<td align="left">Numeric</td>
 </tr>
 </tbody>
 </table>
+</div>
+<div id="methodology" class="section level2">
+<h2>Methodology</h2>
+<ul>
+<li>The <code>caret</code> package, short for <strong>C</strong>lassification And <strong>RE</strong>gression <strong>T</strong>raining, is used for analysis. <a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></li>
+<li>The data is partitioned by <code>caret</code> to run 10X fold Cross-fold Validation repeated 5 times.</li>
+<li>The method is a general linear model (<code>glm</code>) using a binomial or Logistic Regression.</li>
+</ul>
 <hr />
 <div id="logistic-regression-model-summary" class="section level3">
 <h3>Logistic Regression Model Summary</h3>
@@ -670,6 +768,13 @@ tcontrol &lt;- trainControl(method = &quot;repeatedcv&quot;,
                          number = 10,
                          repeats = 5)</code></pre>
 </div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a href="https://www.ibm.com/topics/logistic-regression" class="uri">https://www.ibm.com/topics/logistic-regression</a><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p><a href="https://github.com/topepo/caret/" class="uri">https://github.com/topepo/caret/</a><a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
 
 

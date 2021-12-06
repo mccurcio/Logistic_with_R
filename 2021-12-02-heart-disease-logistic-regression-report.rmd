@@ -1,11 +1,14 @@
 ---
 title: "Analysis of Framingham Heart Study Using Logistic Regression"
 author: "Report by Matthew Curcio"
-date: "12/2/2021"
-output: pdf_document
+date: "12-02-21"
+output: html_document
 ---
 
 ---
+
+## USE https://stats.idre.ucla.edu/r/dae/logit-regression/
+for analysis
 
 ## Executive Summary
 
@@ -13,39 +16,88 @@ output: pdf_document
 - The purpose of the FHS is to **determine the risk factors for cardiovascular disease** by following 14 variables.
 
 
+The five most important factors that determine the risk of cardiac heart disease are:
+
+- By being a men vs women, the log-odds of acquiring CHD is an increase of 0.527. 
+
+- If there is a history of Hypertension, the log-odds of acquiring CHD increase by 0.332.
+
+- For every year in age the log odds of acquiring CHD increase by 0.0602.
+
+- For every Cigarettes/day the log odds of acquiring CHD increase by 0.0204.
+
+- For every Systolic BP the log odds of acquiring CHD increase by 0.0133.
+
+
+
 --- 
 
 ## Disscussion
 
-The goal of this study is to determine which conditions lead to a high probability of a person obtaining Cardiovascular Disease.  
+The goal of this study is to determine which conditions lead to a high probability of a person acquiring cardiovascular disease.
+
+Logistic regression is used to understand the relationship between the dependent variable and one or more independent variables by estimating probabilities using a logistic regression equation. This type of analysis can help you predict the likelihood of an event happening or a choice being made. [^2]
+
+[^2]:https://www.ibm.com/topics/logistic-regression
 
 
-- The `caret` package, short for **C**lassification And **RE**gression **T**raining, is used for analysis.
-- The data is partitioned by `caret` to run 10X fold Cross-fold Validation repeated 5 times.
-- The method is a general linear model (`glm`) using a binomial or Logistic Regression.
-- The dependent variable `TenYearCHD` is an indicator for patients that had cardiovascular disease after 10 years.
+- The dependent variable is the incidence of acquiring cardiac hear disease (CHD) after ten years from testing.  The variable name in this study is abbreviated `TenYearCHD`.
+
 - The model is fit with 14 independent variables.
 
-| #   | Dependent variable | Variable Type |
-| :-- | :----------------- | :------------ |
-| 1   | TenYearCHD         | Factor(0,1)   |
+| No. | Dependent variable   | Variable Type |
+| :-- | :------------------- | :------------ |
+| 1   | CHD Post Ten Year    | Factor(0,1)   |
 
-| #   | Independent variable | Variable Type |
+| No. | Independent variable | Variable Type |
 | :-- | :------------------- | :------------ |
 | 1   | male1                | Factor(0,1)   |
-| 2   | age                  | Continous     |
+| 2   | age                  | Numeric       |
 | 3   | education1           | Factor(0,1)   |
 | 4   | currentSmoker1       | Factor(0,1)   |
-| 5   | cigsPerDay           | Continous     |
+| 5   | cigsPerDay           | Numeric       |
 | 6   | prevalentStroke1     | Factor(0,1)   |
 | 7   | prevalentHyp1        | Factor(0,1)   |
-| 8   | diabetes1            | Continous     |
-| 9   | totChol              | Continous     |
-| 10  | sysBP                | Continous     |
-| 11  | diaBP                | Continous     |
-| 12  | BMI                  | Continous     |
-| 13  | heartRate            | Continous     |
-| 14  | glucose              | Continous     |
+| 8   | diabetes1            | Numeric       |
+| 9   | totChol              | Numeric       |
+| 10  | sysBP                | Numeric       |
+| 11  | diaBP                | Numeric       |
+| 12  | BMI                  | Numeric       |
+| 13  | heartRate            | Numeric       |
+| 14  | glucose              | Numeric       |
+
+
+
+| **Variable Importance**    | Estimate  | P-value  | Significance |
+| :------------------------- | :-------- | :------- | :----------- |
+| Male                       | 0.5269778 | 3.33e-06 | ***          |
+| Age                        | 0.0601825 | < 2e-16  | ***          |
+| Systolic BP                | 0.0132616 | 0.00074  | ***          |
+| Cigarettes / day           | 0.0204103 | 0.00180  | **           |
+| Glucose                    | 0.0060033 | 0.00886  | **           |
+| Total cholesterol          | 0.0023762 | 0.04977  | *            |
+| Prevalence of hypertension | 0.3317811 | 0.02119  | *            |
+
+
+| **List of Factors/Variables with low or no significance** | P-value |
+| :-------------------------------------------------------- | :------ |
+| Education                                                 | 0.48802 |
+| Current Smoker                                            | 0.97215 |
+| Prevalence of Stroke                                      | 0.54001 |
+| Diabetes                                                  | 0.21588 |
+| Diastolic BP                                              | 0.89748 |
+| BMI                                                       | 0.85959 |
+| Heart Rate                                                | 0.19139 |
+
+
+
+## Methodology
+
+- The `caret` package, short for **C**lassification And **RE**gression **T**raining, is used for analysis. [^1]
+- The data is partitioned by `caret` to run 10X fold Cross-fold Validation repeated 5 times.
+- The method is a general linear model (`glm`) using a binomial or Logistic Regression.
+
+[^1]:https://github.com/topepo/caret/
 
 ```{r DONOTSHOW, message=FALSE, warning=FALSE, include=FALSE}
 #DO NOT SHOW
