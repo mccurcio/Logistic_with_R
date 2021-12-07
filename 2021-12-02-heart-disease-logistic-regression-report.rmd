@@ -47,7 +47,7 @@ Logistic regression is used to understand the relationship between the dependent
 
 | No. | Dependent variable   | Variable Type |
 | :-- | :------------------- | :------------ |
-| 1   | CHD Post Ten Year    | Factor(0,1)   |
+| 1   | Cardiac Heart Disease After Ten Years | Factor(0,1)   |
 
 | No. | Independent variable | Variable Type |
 | :-- | :------------------- | :------------ |
