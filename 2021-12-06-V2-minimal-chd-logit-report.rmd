@@ -18,7 +18,7 @@ for interpretation
 ## Executive Summary
 
 
-1. This report investigates the risk factors that lead to cardiovascular heart disease (CHD) with data from the Framingham Heart Study.[^1]
+1. This report investigates the risk factors that lead to cardiovascular heart disease (CHD) utilizing data from the Framingham Heart Study.[^1]
 
 1. R and a little SQL-Lite were used in this RMarkdown document.
 
@@ -37,24 +37,21 @@ for interpretation
 ## Disscussion
 
 
-The Framingham Heart Study[^1] investigates 14 independent variables using 4,133 participants over a ten year period. 
+The Framingham Heart Study[^1] investigates 13 independent variables using 4,133 participants over a ten year period. 
 
->Logistic regression is used to understand the relationship between the dependent variable and one or more independent variables by estimating probabilities using a logistic regression equation. This type of analysis can help you predict the likelihood of an event happening or a choice being made.[^2]
-
-[^2]:https://www.ibm.com/topics/logistic-regression
 
 #### Logistic regression is a good choice for this investigation for several reasons.
 
 1. The outcome being investigated, the absence(0) or presence(1) of CHD, is a binary response.
-2. We are also interested in knowing the probability of acquiring CHD, since biological systems are infrequently simply off or on. 
-3. Knowing more about the probable causes, predictor variables may be important and help mitigate the effects for future prevention.
+
+1. Biological systems are infrequently simply off or on in nature. Therefore knowing more about the probable causes, predictor variables may be important and help mitigate the effects for future prevention.
+
+1. We are also interested in finding the factors and their related odds of acquiring CHD.
 
 </br>
 The dependent variable is the incidence of acquiring cardiac hear disease (CHD) after ten years from testing.  The variable name in this study is abbreviated `TenYearCHD`.
 
 The model is fit with 13 independent variables.
-
---- 
 
 Dependent variable: The absence or presence of Cardiac Heart Disease After Ten Years
 
@@ -69,10 +66,13 @@ Dependent variable: The absence or presence of Cardiac Heart Disease After Ten Y
 |     |                               | 7   | Heart Rate                       |
 |     |                               | 8   | Glucose                          |
 
+--- 
+
 
 ```{r DONOTSHOW, message=FALSE, warning=FALSE, include=FALSE}
 # DO NOT SHOW
 options(tinytex.verbose = TRUE)
+options(digits = 5) 
 
 #Load Libraries
 Libraries <- c("knitr", "readr", "tidyverse", "aod", "ggplot2")
@@ -149,12 +149,14 @@ exp(coef(mylogit))
 
 ### 4. Determination of Odds 
 
-- Given All Other Values Held Constant
 
+We will start by calculating the predicted probability of CHCD at with respect to the five most important variables.  
 
-We will start by calculating the predicted probability of CHCD at with respect to different variables, holding each one constant at their means. First we create and view the data frame.
+## NEEDS MORE EXPLANATION
+holding each one constant at their means. First we create and view the data frame.
+    - Given All Other Values Held Constant
     
-#### A. Prevalence of Stroke Predicted Probability
+#### Example calculations shown for Prevalence of Stroke Factor
 
 ```{r STROKE}
 strok_test <- with(df, data.frame(male = "0",
@@ -169,8 +171,7 @@ strok_test <- with(df, data.frame(male = "0",
                                 BMI = mean(BMI),
                                 heartRate = mean(heartRate),
                                 glucose = mean(glucose),
-                                prevalentStroke = c("0","1")))
-# view(strok_test)
+                                prevalentStroke = c("0","1"))) # Factor of Interest
 
 # REMEMBER convert prevalentStroke from numeric to FACTOR
 strok_test$prevalentStroke <- as.factor(strok_test$prevalentStroke) 
@@ -181,20 +182,22 @@ strok_test$prevalentStroke <- predict(mylogit, newdata = strok_test, type = "res
 ```
 
 
-#####  Odds Of Acquiring CHD Given Prevalence of Stroke
+#### A. Prevalence of Stroke Predicted Probability
+
+
+#####  Probabilities Of Acquiring CHD Given Prevalence of Stroke
 
 1. WITH Prevalence of Stroke, NO: `r strok_test$prevalentStroke[[1]]` 
 2. WITH Prevalence of Stroke, YES: `r strok_test$prevalentStroke[[2]]` 
 
 ##### Therefore the odds are: `r strok_test$prevalentStroke[[2]]/strok_test$prevalentStroke[[1]]`
 
-
 ----
 
 #### B. Odds of CHD Given Male Vs Female
 
 ```{r include=FALSE}
-male_test <- with(df, data.frame(male = c("0","1"),
+male_test <- with(df, data.frame(male = c("0","1"), # Factor of Interest
                                   age = mean(age),
                                   education = "0",
                                   cigsPerDay = 0,
@@ -234,7 +237,7 @@ hyperT_test <- with(df, data.frame(male = "0",
                                    age = mean(age),
                                    education = "0",
                                    cigsPerDay = 0,
-                                   prevalentHyp = c("0","1"),
+                                   prevalentHyp = c("0","1"), # Factor of Interest
                                    diabetes = "0",
                                    totChol = mean(totChol),
                                    sysBP = mean(sysBP),
@@ -263,7 +266,7 @@ hyperT_test$prevalentHyp <- predict(mylogit, newdata = hyperT_test, type = "resp
 ----
 
 
-#### D. Prevalence of Diabetes,6  Odds of CHD
+#### D. Prevalence of Diabetes, Odds of CHD ???
 
 
 ```{r include=FALSE}
@@ -271,8 +274,8 @@ Diabetes_test <- with(df, data.frame(male = "0",
                                      age = mean(age),
                                      education = "0",
                                      cigsPerDay = 0,
-                                     prevalentHyp = 0,
-                                     diabetes = c("0","1"),
+                                     prevalentHyp = "0",
+                                     diabetes = c("0","1"), # Factor of Interest
                                      totChol = mean(totChol),
                                      sysBP = mean(sysBP),
                                      diaBP = mean(diaBP),
@@ -282,9 +285,10 @@ Diabetes_test <- with(df, data.frame(male = "0",
                                      prevalentStroke = "0"))
 
 Diabetes_test$diabetes <- as.factor(Diabetes_test$diabetes) 
-#Diabetes_test$prevalentHyp <- as.factor(Diabetes_test$prevalentHyp)
+#str(Diabetes_test)
 
-Diabetes_test$diabetes <- predict(mylogit, newdata = hyperT_test, type = "response")
+Diabetes_test$diabetes <- predict(mylogit, newdata = Diabetes_test, type = "response")
+#Diabetes_test$diabetes
 ```
 
 
@@ -294,7 +298,6 @@ Diabetes_test$diabetes <- predict(mylogit, newdata = hyperT_test, type = "respon
 2. WITH Diabetes: `r Diabetes_test$diabetes[[2]]` 
 
 ##### Therefore the odds are: `r Diabetes_test$diabetes[[2]]/Diabetes_test$diabetes[[1]]`
-
 
 
 ----
@@ -305,11 +308,11 @@ Diabetes_test$diabetes <- predict(mylogit, newdata = hyperT_test, type = "respon
 
 ```{r include=FALSE}
 age_test <- with(df, data.frame(male = "0",
-                                   age = mean(age),
+                                   age = c(20,30,40,50,60,70,80),
                                    education = "0",
                                    cigsPerDay = 0,
                                    prevalentHyp = "0",
-                                   diabetes = c("0","1"),
+                                   diabetes = "0",
                                    totChol = mean(totChol),
                                    sysBP = mean(sysBP),
                                    diaBP = mean(diaBP),
@@ -319,20 +322,21 @@ age_test <- with(df, data.frame(male = "0",
                                    prevalentStroke = "0"))
 #view(age_test)
 
-# REMEMBER convert male_test from numeric to FACTOR
-age_test$age <- as.factor(age_test$age) 
-#str(age_test)
-
 age_test$age <- predict(mylogit, newdata = age_test, type = "response")
-#age_test$age
+#age_test$age[[1]]
 ```
 
 
-##### Predicted Probability Of Acquiring CHD Given Prevalence of Diabetes
+##### Predicted Probability Of Acquiring CHD Given Differing Ages
 
-1. NO Diabetes: `r Diabetes_test$diabetes[[1]]` 
-2. WITH Diabetes: `r Diabetes_test$diabetes[[2]]` 
+| No. | Age (years) | Probability Given Age |       Odds Compared to 20 yr old        |
+| --: | ----------: | :-------------------: | :-------------------------------------: |
+|   1 |          20 | `r age_test$age[[1]]` | `r age_test$age[[1]]/age_test$age[[1]]` |
+|   2 |          30 | `r age_test$age[[2]]` | `r age_test$age[[2]]/age_test$age[[1]]` |
+|   3 |          40 | `r age_test$age[[3]]` | `r age_test$age[[3]]/age_test$age[[1]]` |
+|   4 |          50 | `r age_test$age[[4]]` | `r age_test$age[[4]]/age_test$age[[1]]` |
+|   5 |          60 | `r age_test$age[[5]]` | `r age_test$age[[5]]/age_test$age[[1]]` |
+|   6 |          70 | `r age_test$age[[6]]` | `r age_test$age[[6]]/age_test$age[[1]]` |
+|   7 |          80 | `r age_test$age[[7]]` | `r age_test$age[[7]]/age_test$age[[1]]` |
 
 ##### Therefore the odds are: `r Diabetes_test$diabetes[[2]]/Diabetes_test$diabetes[[1]]`
-
-

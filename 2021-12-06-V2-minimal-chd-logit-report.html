@@ -180,32 +180,28 @@ pre code {
 <div id="executive-summary" class="section level2">
 <h2>Executive Summary</h2>
 <ol style="list-style-type: decimal">
-<li><p>This report investigates the risk factors that lead to cardiovascular heart disease (CHD) with data from the Framingham Heart Study.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p></li>
+<li><p>This report investigates the risk factors that lead to cardiovascular heart disease (CHD) utilizing data from the Framingham Heart Study.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p></li>
 <li><p>R and a little SQL-Lite were used in this RMarkdown document.</p></li>
 <li><p>The analysis uses logistic regression to determine the five most important factors and the odds.</p></li>
 <li><p>This notebook shows my understanding of statistics, Logistic regression in particular.</p></li>
 </ol>
 <ul>
-<li>By being a men vs women, the log-odds of acquiring CHD is an increase of 0.527.</li>
+<li>By being a men vs women, the odds of acquiring CHD is an increase x.</li>
 </ul>
 <hr />
 </div>
 <div id="disscussion" class="section level2">
 <h2>Disscussion</h2>
-<p>The Framingham Heart Study<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> investigates 14 independent variables using 4,133 participants over a ten year period.</p>
-<blockquote>
-<p>Logistic regression is used to understand the relationship between the dependent variable and one or more independent variables by estimating probabilities using a logistic regression equation. This type of analysis can help you predict the likelihood of an event happening or a choice being made.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
-</blockquote>
+<p>The Framingham Heart Study<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> investigates 13 independent variables using 4,133 participants over a ten year period.</p>
 <div id="logistic-regression-is-a-good-choice-for-this-investigation-for-several-reasons." class="section level4">
 <h4>Logistic regression is a good choice for this investigation for several reasons.</h4>
 <ol style="list-style-type: decimal">
-<li>The outcome being investigated, the absence(0) or presence(1) of CHD, is a binary response.</li>
-<li>We are also interested in knowing the probability of acquiring CHD, since biological systems are infrequently simply off or on.</li>
-<li>Knowing more about the probable causes, predictor variables may be important and help mitigate the effects for future prevention.</li>
+<li><p>The outcome being investigated, the absence(0) or presence(1) of CHD, is a binary response.</p></li>
+<li><p>Biological systems are infrequently simply off or on in nature. Therefore knowing more about the probable causes, predictor variables may be important and help mitigate the effects for future prevention.</p></li>
+<li><p>We are also interested in finding the factors and their related odds of acquiring CHD.</p></li>
 </ol>
 <p></br> The dependent variable is the incidence of acquiring cardiac hear disease (CHD) after ten years from testing. The variable name in this study is abbreviated <code>TenYearCHD</code>.</p>
 <p>The model is fit with 13 independent variables.</p>
-<hr />
 <p>Dependent variable: The absence or presence of Cardiac Heart Disease After Ten Years</p>
 <table>
 <thead>
@@ -267,6 +263,7 @@ pre code {
 </tr>
 </tbody>
 </table>
+<hr />
 </div>
 <div id="logistic-regression-model" class="section level3">
 <h3>1. Logistic Regression Model</h3>
@@ -383,12 +380,14 @@ summary(mylogit)</code></pre>
 </div>
 <div id="determination-of-odds" class="section level3">
 <h3>4. Determination of Odds</h3>
-<ul>
-<li>Given All Other Values Held Constant</li>
-</ul>
-<p>We will start by calculating the predicted probability of CHCD at with respect to different variables, holding each one constant at their means. First we create and view the data frame.</p>
-<div id="a.-prevalence-of-stroke-predicted-probability" class="section level4">
-<h4>A. Prevalence of Stroke Predicted Probability</h4>
+<p>We will start by calculating the predicted probability of CHCD at with respect to the five most important variables.</p>
+</div>
+</div>
+<div id="needs-more-explanation" class="section level2">
+<h2>NEEDS MORE EXPLANATION</h2>
+<p>holding each one constant at their means. First we create and view the data frame. - Given All Other Values Held Constant</p>
+<div id="example-calculations-shown-for-prevalence-of-stroke-factor" class="section level4">
+<h4>Example calculations shown for Prevalence of Stroke Factor</h4>
 <pre class="r"><code>strok_test &lt;- with(df, data.frame(male = &quot;0&quot;,
                                 age = mean(age),
                                 education = &quot;0&quot;,
@@ -401,8 +400,7 @@ summary(mylogit)</code></pre>
                                 BMI = mean(BMI),
                                 heartRate = mean(heartRate),
                                 glucose = mean(glucose),
-                                prevalentStroke = c(&quot;0&quot;,&quot;1&quot;)))
-# view(strok_test)
+                                prevalentStroke = c(&quot;0&quot;,&quot;1&quot;))) # Factor of Interest
 
 # REMEMBER convert prevalentStroke from numeric to FACTOR
 strok_test$prevalentStroke &lt;- as.factor(strok_test$prevalentStroke) 
@@ -410,15 +408,18 @@ strok_test$prevalentStroke &lt;- as.factor(strok_test$prevalentStroke)
 
 strok_test$prevalentStroke &lt;- predict(mylogit, newdata = strok_test, type = &quot;response&quot;)
 #strok_test$prevalentStroke</code></pre>
-<div id="the-probability-of-acquiring-chd" class="section level5">
-<h5>The Probability Of Acquiring CHD</h5>
+</div>
+<div id="a.-prevalence-of-stroke-predicted-probability" class="section level4">
+<h4>A. Prevalence of Stroke Predicted Probability</h4>
+<div id="probabilities-of-acquiring-chd-given-prevalence-of-stroke" class="section level5">
+<h5>Probabilities Of Acquiring CHD Given Prevalence of Stroke</h5>
 <ol style="list-style-type: decimal">
-<li>WITH Prevalence of Stroke, NO: 0.0777833</li>
-<li>WITH Prevalence of Stroke, YES: 0.1876054</li>
+<li>WITH Prevalence of Stroke, NO: 0.07778</li>
+<li>WITH Prevalence of Stroke, YES: 0.18761</li>
 </ol>
 </div>
-<div id="therefore-the-odds-are-2.4118967" class="section level5">
-<h5>Therefore the odds are: 2.4118967</h5>
+<div id="therefore-the-odds-are-2.4119" class="section level5">
+<h5>Therefore the odds are: 2.4119</h5>
 <hr />
 </div>
 </div>
@@ -427,27 +428,104 @@ strok_test$prevalentStroke &lt;- predict(mylogit, newdata = strok_test, type = &
 <div id="predicted-probability-of-acquiring-chd-for-males-vs-females" class="section level5">
 <h5>Predicted Probability Of Acquiring CHD for Males vs Females</h5>
 <ol style="list-style-type: decimal">
-<li>WITH Prevalence of Stroke, NO: 0.0777833</li>
-<li>WITH Prevalence of Stroke, YES: 0.1200531</li>
+<li>Female: 0.07778</li>
+<li>Males: 0.12005</li>
 </ol>
 </div>
-<div id="therefore-the-odds-are-1.5434294" class="section level5">
-<h5>Therefore the odds are: 1.5434294</h5>
+<div id="therefore-the-odds-are-1.54343" class="section level5">
+<h5>Therefore the odds are: 1.54343</h5>
 <hr />
 </div>
 </div>
 <div id="c.-odds-of-chd-given-prevalence-of-hypertension" class="section level4">
 <h4>C. Odds of CHD Given Prevalence of Hypertension</h4>
-<div id="predicted-probability-of-acquiring-chd-wrt-prevalence-of-hypertension" class="section level5">
-<h5>Predicted Probability Of Acquiring CHD wrt Prevalence of Hypertension</h5>
+<div id="predicted-probability-of-acquiring-chd-given-prevalence-of-hypertension" class="section level5">
+<h5>Predicted Probability Of Acquiring CHD Given Prevalence of Hypertension</h5>
 <ol style="list-style-type: decimal">
-<li>WITH Prevalence of Stroke, NO: 0.0777833</li>
-<li>WITH Prevalence of Stroke, YES: 0.0984813</li>
+<li>WITH Prevalence of Hypertension, NO: 0.07778</li>
+<li>WITH Prevalence of Hypertension, YES: 0.09848</li>
 </ol>
 </div>
-<div id="therefore-the-odds-are-1.266098" class="section level5">
-<h5>Therefore the odds are: 1.266098</h5>
+<div id="therefore-the-odds-are-1.2661" class="section level5">
+<h5>Therefore the odds are: 1.2661</h5>
+<hr />
 </div>
+</div>
+<div id="d.-prevalence-of-diabetes-odds-of-chd" class="section level4">
+<h4>D. Prevalence of Diabetes, Odds of CHD ???</h4>
+<div id="predicted-probability-of-acquiring-chd-given-prevalence-of-diabetes" class="section level5">
+<h5>Predicted Probability Of Acquiring CHD Given Prevalence of Diabetes</h5>
+<ol style="list-style-type: decimal">
+<li>NO Diabetes: 0.07778</li>
+<li>WITH Diabetes: 0.09688</li>
+</ol>
+</div>
+<div id="therefore-the-odds-are-1.24557" class="section level5">
+<h5>Therefore the odds are: 1.24557</h5>
+<hr />
+</div>
+</div>
+<div id="e.-odds-of-chd-given-age" class="section level4">
+<h4>E. Odds of CHD Given Age</h4>
+<div id="predicted-probability-of-acquiring-chd-given-differing-ages" class="section level5">
+<h5>Predicted Probability Of Acquiring CHD Given Differing Ages</h5>
+<table>
+<thead>
+<tr class="header">
+<th align="right">No.</th>
+<th align="right">Age (years)</th>
+<th align="center">Probability Given Age</th>
+<th align="center">Odds Compared to 20 yr old</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">20</td>
+<td align="center">0.01307</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">30</td>
+<td align="center">0.02418</td>
+<td align="center">1.84969</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">40</td>
+<td align="center">0.0443</td>
+<td align="center">3.38895</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">50</td>
+<td align="center">0.0798</td>
+<td align="center">6.1044</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">60</td>
+<td align="center">0.13958</td>
+<td align="center">10.67785</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">70</td>
+<td align="center">0.23282</td>
+<td align="center">17.81084</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="right">80</td>
+<td align="center">0.36214</td>
+<td align="center">27.70331</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="therefore-the-odds-are-1.24557-1" class="section level5">
+<h5>Therefore the odds are: 1.24557</h5>
 </div>
 </div>
 </div>
@@ -456,7 +534,6 @@ strok_test$prevalentStroke &lt;- predict(mylogit, newdata = strok_test, type = &
 <ol>
 <li id="fn1"><p>The Framingham Heart Study can be found at: <a href="https://www.kaggle.com/captainozlem/framingham-chd-preprocessed-data" class="uri">https://www.kaggle.com/captainozlem/framingham-chd-preprocessed-data</a><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
 <li id="fn2"><p>The Framingham Heart Study can be found at: <a href="https://www.kaggle.com/captainozlem/framingham-chd-preprocessed-data" class="uri">https://www.kaggle.com/captainozlem/framingham-chd-preprocessed-data</a><a href="#fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="fn3"><p><a href="https://www.ibm.com/topics/logistic-regression" class="uri">https://www.ibm.com/topics/logistic-regression</a><a href="#fnref3" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
 
