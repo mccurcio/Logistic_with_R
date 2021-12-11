@@ -7,31 +7,24 @@ output: html_document
 ---
 
 
-## USE https://stats.idre.ucla.edu/r/dae/logit-regression/
+- USE https://stats.idre.ucla.edu/r/dae/logit-regression/
 for analysis
 
-## USE https://stats.idre.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/
+- USE https://stats.idre.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/
 for interpretation
 
 ---
 
 ## Executive Summary
 
-- The Framingham Heart Study (FHS) is a longitudinal study that investigated **4,133 participants** over a ten (10) year period.
-- The purpose of the FHS is to **determine the risk factors for cardiovascular disease** by following 13 variables.
 
+- The goal of this study is to determine which risk factors lead to a high probability of a person acquiring cardiovascular disease.
 
-The five most important factors that determine the risk of cardiac heart disease are:
+- The model is fit with 14 independent variables using the information from the 4,133 participants over a ten year period.
+
+The five most important factors that effect the risk of acquiring cardiac heart disease are:
 
 - By being a men vs women, the log-odds of acquiring CHD is an increase of 0.527. 
-
-- If there is a history of Hypertension, the log-odds of acquiring CHD increase by 0.332.
-
-- For every year in age the log odds of acquiring CHD increase by 0.0602.
-
-- For every Cigarettes/day the log odds of acquiring CHD increase by 0.0204.
-
-- For every Systolic BP the log odds of acquiring CHD increase by 0.0133.
 
 
 
@@ -43,6 +36,9 @@ The five most important factors that determine the risk of cardiac heart disease
 - The data from the Framingham Heart Study can be found at https://www.kaggle.com/captainozlem/framingham-chd-preprocessed-data.
 
 The goal of this study is to determine which conditions lead to a high probability of a person acquiring cardiovascular disease.
+
+- The Framingham Heart Study (FHS) is a longitudinal study that investigated **4,133 participants** over a ten (10) year period.
+- The purpose of the FHS is to **determine the risk factors for cardiovascular disease** by following 13 variables.
 
 Logistic regression is used to understand the relationship between the dependent variable and one or more independent variables by estimating probabilities using a logistic regression equation. This type of analysis can help you predict the likelihood of an event happening or a choice being made. [^2]
 
@@ -94,7 +90,7 @@ df <- read_csv("CHD_preprocessed.csv",
 #view(df)
 ```
 
-### Logistic Regression Model Summary
+### 1. Logistic Regression Model Summary
 
 
 ```{r cache=TRUE}
@@ -106,6 +102,14 @@ mylogit <- glm(TenYearCHD ~ male + age + education +
 
 summary(mylogit)
 ```
+
+
+```{r}
+xtabs(~TenYearCHD + prevalentStroke, data = df)
+```
+
+
+
 
 
 ```{r}
