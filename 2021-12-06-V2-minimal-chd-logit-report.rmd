@@ -263,7 +263,7 @@ hyperT_test$prevalentHyp <- predict(mylogit, newdata = hyperT_test, type = "resp
 ----
 
 
-#### D. Odds of CHD Given Prevalence of Diabetes
+#### D. Prevalence of Diabetes,6  Odds of CHD
 
 
 ```{r include=FALSE}
