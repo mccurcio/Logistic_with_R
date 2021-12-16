@@ -1,6 +1,6 @@
-# Do not Load Heart Disease data
+# Do not Load Heart Disease CSV data
+# Do Load .ZIP data
 *.csv
-*.zip
 
 # History files
 .Rhistory

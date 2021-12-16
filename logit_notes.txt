@@ -1,0 +1,77 @@
+Understanding Logit
+
+
+Book: Applied Logistic REgression by David Hosmer & Stanley Lemeshow, 2000, isbn: 0-471-35632-8
+
+
+1. commonly used for discrete output, binary or dichotomous
+
+What is the goal of Logit
+
+* Linear and logit have same assumptions
+
+- The Observations are Independent
+- There is No Multicollinearity Among Explanatory Variables
+- There are No Extreme Outliers
+- There is a Linear Relationship Between Explanatory Variables and the Logit of the Response Variable
+- The Sample Size is Sufficiently Large
+
+### Assumptions of Logistic Regression vs. Linear Regression
+
+* In contrast to linear regression, logistic regression does not require:
+
+1. A linear relationship between the explanatory variable(s) and the response variable.
+1. The residuals of the model to be normally distributed.
+1. The residuals to have constant variance, also known as homoscedasticity.
+
+
+Logistic Regression Real Life Example 
+
+    The transaction is fraudulent.
+    The transaction is not fraudulent.
+
+- The second advantage is speed, and sometimes this is crucial. 
+- logit is very explainable
+
+
+There are three types of logistic regression models:
+
+    Binary logistic regression: The response variable can only belong to one of two categories.
+    Multinomial logistic regression: The response variable can belong to one of three or more categories and there is no natural ordering among the categories.
+    Ordinal logistic regression: The response variable can belong to one of three or more categories and there is a natural ordering among the categories.
+
+https://www.statology.org/types-of-logistic-regression/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
