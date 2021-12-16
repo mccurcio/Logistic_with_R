@@ -172,35 +172,30 @@ pre code {
 </div>
 
 
-<p>Notes - USE <a href="https://stats.idre.ucla.edu/r/dae/logit-regression/" class="uri">https://stats.idre.ucla.edu/r/dae/logit-regression/</a> for analysis</p>
-<ul>
-<li>USE <a href="https://stats.idre.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/" class="uri">https://stats.idre.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/</a> for interpretation</li>
-</ul>
-<hr />
-<div id="executive-summary" class="section level2">
-<h2>Executive Summary</h2>
+<div id="i.-executive-summary" class="section level2">
+<h2>I. Executive Summary</h2>
 <ol style="list-style-type: decimal">
-<li><p>This report investigates the risk factors that lead to cardiovascular heart disease (CHD) utilizing data from the Framingham Heart Study.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p></li>
-<li><p>R and a little SQL-Lite were used in this RMarkdown document.</p></li>
-<li><p>The analysis uses logistic regression to determine the five most important factors and the odds.</p></li>
-<li><p>This notebook shows my understanding of statistics, Logistic regression in particular.</p></li>
-</ol>
+<li><p>This report investigates the risk factors that lead to cardiovascular disease (CVD) utilizing data from the Framingham Heart Study.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p></li>
+<li><p>R and SQL-Lite are used in this RMarkdown document.</p></li>
+<li><p>The analysis uses logistic regression to determine the five most important factors and the odds.</p>
 <ul>
-<li>By being a men vs women, the odds of acquiring CHD is an increase x.</li>
-</ul>
+<li>By being a men vs women, the odds of acquiring CVD is an increase x.</li>
+</ul></li>
+<li><p>This notebook shows my deeper understanding of Logistic regression. This presentation is part of a series of articles describing Logit.</p></li>
+</ol>
 <hr />
 </div>
-<div id="disscussion" class="section level2">
-<h2>Disscussion</h2>
-<p>The Framingham Heart Study<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> investigates 13 independent variables using 4,133 participants over a ten year period.</p>
-<div id="logistic-regression-is-a-good-choice-for-this-investigation-for-several-reasons." class="section level4">
-<h4>Logistic regression is a good choice for this investigation for several reasons.</h4>
+<div id="ii.-disscussion" class="section level2">
+<h2>II. Disscussion</h2>
+<p>The Framingham Heart Study<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> investigates 14 independent variables using 4,133 participants over a ten year period.</p>
+<p>Logistic regression is a good choice for this investigation for several reasons.</p>
 <ol style="list-style-type: decimal">
-<li><p>The outcome being investigated, the absence(0) or presence(1) of CHD, is a binary response.</p></li>
+<li><p>The outcome being investigated, the absence(0) or presence(1) of cardiovascular disease, is a binary response.</p></li>
+<li></li>
 <li><p>Biological systems are infrequently simply off or on in nature. Therefore knowing more about the probable causes, predictor variables may be important and help mitigate the effects for future prevention.</p></li>
-<li><p>We are also interested in finding the factors and their related odds of acquiring CHD.</p></li>
+<li><p>We are also interested in finding the factors and their related odds of acquiring CVD.</p></li>
 </ol>
-<p></br> The dependent variable is the incidence of acquiring cardiac hear disease (CHD) after ten years from testing. The variable name in this study is abbreviated <code>TenYearCHD</code>.</p>
+<p></br> The dependent variable is the incidence of acquiring cardiac hear disease (CVD) after ten years from testing. The variable name in this study is abbreviated <code>TenYearCHD</code>.</p>
 <p>The model is fit with 13 independent variables.</p>
 <p>Dependent variable: The absence or presence of Cardiac Heart Disease After Ten Years</p>
 <table>
@@ -265,6 +260,8 @@ pre code {
 </table>
 <hr />
 </div>
+<div id="iii.-experimental-results" class="section level2">
+<h2>III. Experimental Results</h2>
 <div id="logistic-regression-model" class="section level3">
 <h3>1. Logistic Regression Model</h3>
 <pre class="r"><code>mylogit &lt;- glm(TenYearCHD ~ male + age + education + 
@@ -319,7 +316,7 @@ summary(mylogit)</code></pre>
 </ul>
 <p>The Wald test is a test of significance for individual regression coefficients in a logistic regression.</p>
 <p>Considering the 13 predictors, neglecting the intercept, we see <span class="math inline">\(\chi^2\)</span> = 333.7 with 13 degrees of freedom. This gives <em>P &lt;&lt; 0.001</em>.</p>
-<p>From this we can conclude that the parameters are significant and do represent useful in describing CHD.</p>
+<p>From this we can conclude that the parameters are significant and do represent useful in describing CVD.</p>
 <pre class="r"><code>wald.test(b = coef(mylogit), Sigma = vcov(mylogit), Terms = 2:14)</code></pre>
 <pre><code>## Wald test:
 ## ----------
@@ -331,48 +328,42 @@ summary(mylogit)</code></pre>
 <h3>3. Five Most Important Predictors</h3>
 <pre class="r"><code>exp(coef(mylogit))</code></pre>
 <pre><code>##      (Intercept)            male1              age       education1 
-##     0.0003191329     1.6175706701     1.0646367997     1.0307735141 
+##       0.00031913       1.61757067       1.06463680       1.03077351 
 ##       cigsPerDay prevalentStroke1    prevalentHyp1        diabetes1 
-##     1.0210933823     2.7379443336     1.2951663538     1.2719094899 
+##       1.02109338       2.73794433       1.29516635       1.27190949 
 ##          totChol            sysBP            diaBP              BMI 
-##     1.0018434178     1.0150974955     0.9961456656     1.0021260646 
+##       1.00184342       1.01509750       0.99614567       1.00212606 
 ##        heartRate          glucose 
-##     0.9975244877     1.0062088998</code></pre>
-<div id="the-5-most-important-variables-determining-the-risk-of-acquiring-chd-are" class="section level5">
-<h5>The 5 most important variables determining the risk of acquiring CHD are:</h5>
+##       0.99752449       1.00620890</code></pre>
+<div id="the-5-most-important-variables-determining-the-risk-of-acquiring-cvd-are" class="section level5">
+<h5>The 5 most important variables determining the risk of acquiring CVD are:</h5>
 <table>
 <thead>
 <tr class="header">
 <th align="left">No.</th>
 <th align="left">Risk Factor</th>
-<th align="left">Odds</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Prevalence of Stroke</td>
-<td align="left">2.74</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Is Male</td>
-<td align="left">1.62</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">prevalence of Hypertension</td>
-<td align="left">1.30</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Is Diabetic</td>
-<td align="left">1.27</td>
 </tr>
 <tr class="odd">
 <td align="left">5</td>
 <td align="left">Age</td>
-<td align="left">1.06</td>
 </tr>
 </tbody>
 </table>
@@ -411,36 +402,38 @@ strok_test$prevalentStroke &lt;- predict(mylogit, newdata = strok_test, type = &
 </div>
 <div id="a.-prevalence-of-stroke-predicted-probability" class="section level4">
 <h4>A. Prevalence of Stroke Predicted Probability</h4>
-<div id="probabilities-of-acquiring-chd-given-prevalence-of-stroke" class="section level5">
-<h5>Probabilities Of Acquiring CHD Given Prevalence of Stroke</h5>
+<div id="probabilities-of-acquiring-cvd-given-prevalence-of-stroke" class="section level5">
+<h5>Probabilities Of Acquiring CVD Given Prevalence of Stroke</h5>
 <ol style="list-style-type: decimal">
-<li>WITH Prevalence of Stroke, NO: 0.07778</li>
-<li>WITH Prevalence of Stroke, YES: 0.18761</li>
+<li>NO Prevalence of Stroke: 0.07778</li>
+<li>WITH Prevalence of Stroke: 0.18761</li>
 </ol>
-</div>
-<div id="therefore-the-odds-are-2.4119" class="section level5">
-<h5>Therefore the odds are: 2.4119</h5>
+<p><span class="math display">\[\large Odds = \frac{Pr(CVD~WITH~Prevalence~of~Stroke)}{Pr(CVD~NO~Prevalence~of~Stroke)} ~=~ \frac{0.18761}{0.07778} ~=~ 2.4119\]</span></p>
+<ul>
+<li>Therefore the odds are: 2.4119</li>
+</ul>
 <hr />
 </div>
 </div>
-<div id="b.-odds-of-chd-given-male-vs-female" class="section level4">
-<h4>B. Odds of CHD Given Male Vs Female</h4>
-<div id="predicted-probability-of-acquiring-chd-for-males-vs-females" class="section level5">
-<h5>Predicted Probability Of Acquiring CHD for Males vs Females</h5>
+<div id="b.-odds-of-cvd-given-male-vs-female" class="section level4">
+<h4>B. Odds of CVD Given Male Vs Female</h4>
+<div id="predicted-probability-of-acquiring-cvd-for-males-vs-females" class="section level5">
+<h5>Predicted Probability Of Acquiring CVD for Males vs Females</h5>
 <ol style="list-style-type: decimal">
 <li>Female: 0.07778</li>
 <li>Males: 0.12005</li>
 </ol>
-</div>
-<div id="therefore-the-odds-are-1.54343" class="section level5">
-<h5>Therefore the odds are: 1.54343</h5>
+<p><span class="math display">\[\large Odds = \frac{Pr(Aquiring~CVD~as~a~Male)}{Pr(Aquiring~CVD~as~a~Female)}  ~=~ \frac{0.12005}{0.07778}  ~=~ 1.54343\]</span></p>
+<ul>
+<li>Therefore the odds are: 1.54343</li>
+</ul>
 <hr />
 </div>
 </div>
-<div id="c.-odds-of-chd-given-prevalence-of-hypertension" class="section level4">
-<h4>C. Odds of CHD Given Prevalence of Hypertension</h4>
-<div id="predicted-probability-of-acquiring-chd-given-prevalence-of-hypertension" class="section level5">
-<h5>Predicted Probability Of Acquiring CHD Given Prevalence of Hypertension</h5>
+<div id="c.-odds-of-cvd-given-prevalence-of-hypertension" class="section level4">
+<h4>C. Odds of CVD Given Prevalence of Hypertension</h4>
+<div id="predicted-probability-of-acquiring-cvd-given-prevalence-of-hypertension" class="section level5">
+<h5>Predicted Probability Of Acquiring CVD Given Prevalence of Hypertension</h5>
 <ol style="list-style-type: decimal">
 <li>WITH Prevalence of Hypertension, NO: 0.07778</li>
 <li>WITH Prevalence of Hypertension, YES: 0.09848</li>
@@ -451,10 +444,10 @@ strok_test$prevalentStroke &lt;- predict(mylogit, newdata = strok_test, type = &
 <hr />
 </div>
 </div>
-<div id="d.-prevalence-of-diabetes-odds-of-chd" class="section level4">
-<h4>D. Prevalence of Diabetes, Odds of CHD ???</h4>
-<div id="predicted-probability-of-acquiring-chd-given-prevalence-of-diabetes" class="section level5">
-<h5>Predicted Probability Of Acquiring CHD Given Prevalence of Diabetes</h5>
+<div id="d.-prevalence-of-diabetes-odds-of-cvd" class="section level4">
+<h4>D. Prevalence of Diabetes, Odds of CVD ???</h4>
+<div id="predicted-probability-of-acquiring-cvd-given-prevalence-of-diabetes" class="section level5">
+<h5>Predicted Probability Of Acquiring CVD Given Prevalence of Diabetes</h5>
 <ol style="list-style-type: decimal">
 <li>NO Diabetes: 0.07778</li>
 <li>WITH Diabetes: 0.09688</li>
@@ -465,10 +458,10 @@ strok_test$prevalentStroke &lt;- predict(mylogit, newdata = strok_test, type = &
 <hr />
 </div>
 </div>
-<div id="e.-odds-of-chd-given-age" class="section level4">
-<h4>E. Odds of CHD Given Age</h4>
-<div id="predicted-probability-of-acquiring-chd-given-differing-ages" class="section level5">
-<h5>Predicted Probability Of Acquiring CHD Given Differing Ages</h5>
+<div id="e.-odds-of-cvd-given-age" class="section level4">
+<h4>E. Odds of CVD Given Age</h4>
+<div id="predicted-probability-of-acquiring-cvd-given-differing-ages" class="section level5">
+<h5>Predicted Probability Of Acquiring CVD Given Differing Ages</h5>
 <table>
 <thead>
 <tr class="header">
@@ -528,6 +521,14 @@ strok_test$prevalentStroke &lt;- predict(mylogit, newdata = strok_test, type = &
 <h5>Therefore the odds are: 1.24557</h5>
 </div>
 </div>
+</div>
+<div id="iv.-conclusion" class="section level2">
+<h2>IV. Conclusion</h2>
+<hr />
+<p>Notes - USE <a href="https://stats.idre.ucla.edu/r/dae/logit-regression/" class="uri">https://stats.idre.ucla.edu/r/dae/logit-regression/</a> for analysis</p>
+<ul>
+<li>USE <a href="https://stats.idre.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/" class="uri">https://stats.idre.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/</a> for interpretation</li>
+</ul>
 </div>
 <div class="footnotes">
 <hr />

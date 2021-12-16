@@ -6,50 +6,42 @@ date: "12-02-21"
 output: html_document
 ---
 
-Notes
-- USE https://stats.idre.ucla.edu/r/dae/logit-regression/
-for analysis
 
-- USE https://stats.idre.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/
-for interpretation
-
----
-
-## Executive Summary
+## I. Executive Summary
 
 
-1. This report investigates the risk factors that lead to cardiovascular heart disease (CHD) utilizing data from the Framingham Heart Study.[^1]
+1. This report investigates the risk factors that lead to cardiovascular disease (CVD) utilizing data from the Framingham Heart Study.[^1]
 
-1. R and a little SQL-Lite were used in this RMarkdown document.
+1. R and SQL-Lite are used in this RMarkdown document.
 
 1. The analysis uses logistic regression to determine the five most important factors and the odds.
 
-1. This notebook shows my understanding of statistics, Logistic regression in particular.
+    * By being a men vs women, the odds of acquiring CVD is an increase x. 
 
-* By being a men vs women, the odds of acquiring CHD is an increase x. 
+1. This notebook shows my deeper understanding of Logistic regression. This presentation is part of a series of articles describing Logit.
+
 
 [^1]:The Framingham Heart Study can be found at: https://www.kaggle.com/captainozlem/framingham-chd-preprocessed-data
 
-[^2]:https://github.com/ekstroem/dataReporter
-
 --- 
 
-## Disscussion
+## II. Disscussion
 
 
-The Framingham Heart Study[^1] investigates 13 independent variables using 4,133 participants over a ten year period. 
+The Framingham Heart Study[^1] investigates 14 independent variables using 4,133 participants over a ten year period. 
 
+Logistic regression is a good choice for this investigation for several reasons.
 
-#### Logistic regression is a good choice for this investigation for several reasons.
+1. The outcome being investigated, the absence(0) or presence(1) of cardiovascular disease, is a binary response.
 
-1. The outcome being investigated, the absence(0) or presence(1) of CHD, is a binary response.
+1. 
 
 1. Biological systems are infrequently simply off or on in nature. Therefore knowing more about the probable causes, predictor variables may be important and help mitigate the effects for future prevention.
 
-1. We are also interested in finding the factors and their related odds of acquiring CHD.
+1. We are also interested in finding the factors and their related odds of acquiring CVD.
 
 </br>
-The dependent variable is the incidence of acquiring cardiac hear disease (CHD) after ten years from testing.  The variable name in this study is abbreviated `TenYearCHD`.
+The dependent variable is the incidence of acquiring cardiac hear disease (CVD) after ten years from testing.  The variable name in this study is abbreviated `TenYearCHD`.
 
 The model is fit with 13 independent variables.
 
@@ -95,6 +87,8 @@ df <- read_csv("CHD_preprocessed.csv",
 ```
 
 
+## III. Experimental Results
+
 ### 1. Logistic Regression Model
 
 
@@ -119,7 +113,7 @@ The Wald test is a test of significance for individual regression coefficients i
 
 Considering the 13 predictors, neglecting the intercept, we see $\chi^2$ = 333.7 with 13 degrees of freedom. This gives *P << 0.001*.
 
-From this we can conclude that the parameters are significant and do represent useful in describing CHD.
+From this we can conclude that the parameters are significant and do represent useful in describing CVD.
 
 
 ```{r}
@@ -135,16 +129,15 @@ exp(coef(mylogit))
 ```
 
 
-##### The 5 most important variables determining the risk of acquiring CHD are:
+##### The 5 most important variables determining the risk of acquiring CVD are:
 
-| No. | Risk Factor                | Odds |
-| :-- | :------------------------- | :--- |
-| 1   | Prevalence of Stroke       | 2.74 |
-| 2   | Is Male                    | 1.62 |
-| 3   | prevalence of Hypertension | 1.30 |
-| 4   | Is Diabetic                | 1.27 |
-| 5   | Age                        | 1.06 |
-
+| No. | Risk Factor                |
+| :-- | :------------------------- |
+| 1   | Prevalence of Stroke       |
+| 2   | Is Male                    |
+| 3   | prevalence of Hypertension |
+| 4   | Is Diabetic                |
+| 5   | Age                        |
 
 
 ### 4. Determination of Odds 
@@ -185,16 +178,18 @@ strok_test$prevalentStroke <- predict(mylogit, newdata = strok_test, type = "res
 #### A. Prevalence of Stroke Predicted Probability
 
 
-#####  Probabilities Of Acquiring CHD Given Prevalence of Stroke
+#####  Probabilities Of Acquiring CVD Given Prevalence of Stroke
 
-1. WITH Prevalence of Stroke, NO: `r strok_test$prevalentStroke[[1]]` 
-2. WITH Prevalence of Stroke, YES: `r strok_test$prevalentStroke[[2]]` 
+1. NO Prevalence of Stroke: `r strok_test$prevalentStroke[[1]]` 
+2. WITH Prevalence of Stroke: `r strok_test$prevalentStroke[[2]]`
 
-##### Therefore the odds are: `r strok_test$prevalentStroke[[2]]/strok_test$prevalentStroke[[1]]`
+$$\large Odds = \frac{Pr(CVD~WITH~Prevalence~of~Stroke)}{Pr(CVD~NO~Prevalence~of~Stroke)} ~=~ \frac{`r strok_test$prevalentStroke[[2]]`}{`r strok_test$prevalentStroke[[1]]`} ~=~ `r strok_test$prevalentStroke[[2]]/strok_test$prevalentStroke[[1]]`$$
+
+* Therefore the odds are: `r strok_test$prevalentStroke[[2]]/strok_test$prevalentStroke[[1]]`
 
 ----
 
-#### B. Odds of CHD Given Male Vs Female
+#### B. Odds of CVD Given Male Vs Female
 
 ```{r include=FALSE}
 male_test <- with(df, data.frame(male = c("0","1"), # Factor of Interest
@@ -218,18 +213,21 @@ male_test$male <- predict(mylogit, newdata = male_test, type = "response")
 ```
 
 
-##### Predicted Probability Of Acquiring CHD for Males vs Females
+##### Predicted Probability Of Acquiring CVD for Males vs Females
 
 1. Female: `r male_test$male[[1]]` 
 2. Males: `r male_test$male[[2]]` 
 
-##### Therefore the odds are: `r male_test$male[[2]]/male_test$male[[1]]`
+$$\large Odds = \frac{Pr(Aquiring~CVD~as~a~Male)}{Pr(Aquiring~CVD~as~a~Female)}  ~=~ \frac{`r male_test$male[[2]]`}{`r male_test$male[[1]]`}  ~=~ `r male_test$male[[2]]/male_test$male[[1]]`$$
+
+
+* Therefore the odds are: `r male_test$male[[2]]/male_test$male[[1]]`
 
 
 ----
 
 
-#### C. Odds of CHD Given Prevalence of Hypertension
+#### C. Odds of CVD Given Prevalence of Hypertension
 
 
 ```{r include=FALSE}
@@ -254,7 +252,7 @@ hyperT_test$prevalentHyp <- predict(mylogit, newdata = hyperT_test, type = "resp
 ```
 
 
-##### Predicted Probability Of Acquiring CHD Given Prevalence of Hypertension
+##### Predicted Probability Of Acquiring CVD Given Prevalence of Hypertension
 
 1. WITH Prevalence of Hypertension, NO: `r hyperT_test$prevalentHyp[[1]]` 
 2. WITH Prevalence of Hypertension, YES: `r hyperT_test$prevalentHyp[[2]]` 
@@ -266,7 +264,7 @@ hyperT_test$prevalentHyp <- predict(mylogit, newdata = hyperT_test, type = "resp
 ----
 
 
-#### D. Prevalence of Diabetes, Odds of CHD ???
+#### D. Prevalence of Diabetes, Odds of CVD ???
 
 
 ```{r include=FALSE}
@@ -292,7 +290,7 @@ Diabetes_test$diabetes <- predict(mylogit, newdata = Diabetes_test, type = "resp
 ```
 
 
-##### Predicted Probability Of Acquiring CHD Given Prevalence of Diabetes
+##### Predicted Probability Of Acquiring CVD Given Prevalence of Diabetes
 
 1. NO Diabetes: `r Diabetes_test$diabetes[[1]]` 
 2. WITH Diabetes: `r Diabetes_test$diabetes[[2]]` 
@@ -303,7 +301,7 @@ Diabetes_test$diabetes <- predict(mylogit, newdata = Diabetes_test, type = "resp
 ----
 
 
-#### E. Odds of CHD Given Age
+#### E. Odds of CVD Given Age
 
 
 ```{r include=FALSE}
@@ -327,7 +325,7 @@ age_test$age <- predict(mylogit, newdata = age_test, type = "response")
 ```
 
 
-##### Predicted Probability Of Acquiring CHD Given Differing Ages
+##### Predicted Probability Of Acquiring CVD Given Differing Ages
 
 | No. | Age (years) | Probability Given Age |       Odds Compared to 20 yr old        |
 | --: | ----------: | :-------------------: | :-------------------------------------: |
@@ -340,3 +338,18 @@ age_test$age <- predict(mylogit, newdata = age_test, type = "response")
 |   7 |          80 | `r age_test$age[[7]]` | `r age_test$age[[7]]/age_test$age[[1]]` |
 
 ##### Therefore the odds are: `r Diabetes_test$diabetes[[2]]/Diabetes_test$diabetes[[1]]`
+
+
+## IV. Conclusion
+
+
+
+---
+
+
+Notes
+- USE https://stats.idre.ucla.edu/r/dae/logit-regression/
+for analysis
+
+- USE https://stats.idre.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/
+for interpretation
