@@ -1,9 +1,19 @@
 ## framingham_logit
 
-1. Purpose:
-1. Data: Framingham Heart Disease Study, [mysdata](https://github.com/mccurcio/framingham_logit/blob/main/2021-12-02-heart-disease-logistic-regression-report.html)
-1. Test:
-1. Conclusion:
+1. Purpose: This R markdown document displays my understanding of logistic regression and R. This report is part one of two articles describing Logit. The first article is a discussion of the Logistic Regression followed by a typical report.
+2. Data: Framingham Heart Disease Study, [mysdata](https://github.com/mccurcio/Logistic_with_R/blob/main/fhds_dataset.zip)
+3. Conclusion: We find seven (7) factors and their related odds leading to cardiovascular disease.
+
+| No. | Factors                                      | Approximate Odds Over Mean               |
+| :-- | :------------------------------------------- | :--------------------------------------- |
+| 1   | Prevalence Of Stroke In Family History.      | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;240% |
+| 2   | Male Vs Female                               | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;150% |
+| 3   | Prevalence Of Hypertension In Family History | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;130% |
+| 4   | Age                                          | < 2,800%                                 |
+| 5   | Cigarettes Per Day                           | < &nbsp;&nbsp;&nbsp;210%                 |
+| 6   | Systolic Blood Pressure                      | < &nbsp;&nbsp;&nbsp;780%                 |
+| 7   | Glucose Levels                               | < &nbsp;&nbsp;&nbsp;250%                 |
+
 
 NOTES: I will use Logistic Regression to determine the Probability of Heart Disease and its factors.
 

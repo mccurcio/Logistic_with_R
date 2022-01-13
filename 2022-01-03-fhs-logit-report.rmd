@@ -18,7 +18,7 @@ output:
 
 1. This R markdown document displays my understanding of logistic regression and R. This report is part one of two articles describing Logit. The first article is a discussion of the Logistic Regression followed by a typical report.
 
-1. Using the Framingham Heart Study data, we find seven (7) factors and their related odds leading to cardiovascular disease.
+1. We find seven (7) factors and their related odds leading to cardiovascular disease.
 
 | No. | Factors                                      | Approximate Odds Over Mean               |
 | :-- | :------------------------------------------- | :--------------------------------------- |
