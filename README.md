@@ -1,10 +1,9 @@
-## Logistic_with_R
+## Logistic_Regression_Report_with_R
 
-1. Purpose: This R markdown document displays my understanding of logistic regression and R. This report is part one of two articles describing Logit. 
-  
-    A. [Logisitc Regression Report](https://mccurcio.github.io/Logistic_with_R/2022-01-03-fhs-logit-report.html)
-    B. Under construction
+1. This [Logisitc Regression Report](https://mccurcio.github.io/Logistic_with_R/2022-01-03-fhs-logit-report.html)  displays my understanding of logistic regression and R. 
+
 2. Data: Framingham Heart Disease Study, [FHS_data](https://github.com/mccurcio/Logistic_with_R/blob/main/fhds_dataset.zip)
+
 3. Conclusion: We find seven (7) factors and their related odds leading to cardiovascular disease.
 
 | No. | Factors                                      | Approximate Odds Over Mean               |
@@ -25,7 +24,7 @@ NOTES: I will use Logistic Regression to determine the Probability of Heart Dise
 
 1.	Logistic Regression does not require a linear relationship between the independent and dependent variables. 
 
-2.	The residuals from the model do not need to follow the normal distribution.
+2.	However, the residuals from the model do not need to follow the normal distribution.
 
 3.	Logistic Regression does not require the assumption of homoscedasticity. Homoscedasticity means all the variables in the model have the same variance. So, the variables may have different variances in the Logistic Regression model.
 

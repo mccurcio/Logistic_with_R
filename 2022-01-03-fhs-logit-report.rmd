@@ -8,6 +8,7 @@ output:
 ---
 
 
+See: [GitHub Repo](https://github.com/mccurcio/Logistic_with_R)
 <br>
 
 ## I. Executive Summary
