@@ -2,7 +2,9 @@
 title: "Seven Top Risk Factors For Cardiovascular Disease"
 subtitle: "An investigation of the Framingham Heart Study"
 author: "By Matthew Curcio"
-output: html_document
+output:
+  html_document:
+    code_folding: hide
 ---
 
 
@@ -18,15 +20,15 @@ output: html_document
 
 1. Using the Framingham Heart Study data, we find seven (7) factors and their related odds leading to cardiovascular disease.
 
-| No. | Factors                                      | Approximate Odds Over Mean |
-| :-- | :------------------------------------------- | :------------------------- |
-| 1   | Prevalence Of Stroke In family history.      | 240%                       |
-| 2   | Male Vs Female                               | 150%                       |
-| 3   | Prevalence of Hypertension In Family History | 130%                       |
-| 4   | Age                                          | < 2,800%                   |
-| 5   | Cigarettes Per Day                           | < 210%                     |
-| 6   | Systolic Blood Pressure                      | < 780%                     |
-| 7   | Glucose Levels                               | < 250%                     |
+| No. | Factors                                      | Approximate Odds Over Mean               |
+| :-- | :------------------------------------------- | :--------------------------------------- |
+| 1   | Prevalence Of Stroke In Family History.      | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;240% |
+| 2   | Male Vs Female                               | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;150% |
+| 3   | Prevalence Of Hypertension In Family History | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;130% |
+| 4   | Age                                          | < 2,800%                                 |
+| 5   | Cigarettes Per Day                           | < &nbsp;&nbsp;&nbsp;210%                 |
+| 6   | Systolic Blood Pressure                      | < &nbsp;&nbsp;&nbsp;780%                 |
+| 7   | Glucose Levels                               | < &nbsp;&nbsp;&nbsp;250%                 |
 
 [^1]:The Framingham Heart Study: https://framinghamheartstudy.org/fhs-about/
 
@@ -143,18 +145,17 @@ summary(mylogit)
 
 #### B. Wald Test: Do The Seven Factors Fit Our Model
 
-- The Wald Chi-Square Test can help determine if our proposed model is valuable and significant.  
+- The Wald Chi-Square Test can help determine if our proposed model is valuable and significant.
 
-- By testing seven (7) significant risk factors we see that this model has a p-value = 0.0. Therefore this model does 
-```{r}
+- The Wald test generates a *P-value << 0.001*. 
+
+- Therefore, we conclude the seven (7) parameters are significant and useful in describing cardiovascular disease.
+
+```{r cache=TRUE}
 wald.test(b = coef(mylogit), 
           Sigma = vcov(mylogit), 
           Terms = c(2, 3, 5, 6, 7, 10, 14))
 ```
-
-- The Wald test generates a *P-value << 0.001*. 
-
-- We can conclude the seven (7) parameters are significant and useful in describing cardiovascular disease.
 
 <br>
 
@@ -162,9 +163,9 @@ wald.test(b = coef(mylogit),
 
 - We can calculate the odds of acquiring cardiovascular disease for each of the seven variables. 
 
-- By holding all other values constant we create a dataframe that investigates the odds given Prevalence of Stroke
+- By holding all other values constant we create a dataframe that investigates the odds given Prevalence of Stroke, for example.
 
-```{r Stroke}
+```{r Stroke, cache=TRUE}
 strok_test <- with(df, data.frame(male = "0",
                                   age = mean(age),
                                   education = "0",
@@ -187,10 +188,9 @@ strok_test$prevalentStroke <- as.factor(strok_test$prevalentStroke)
 strok_test$prevalentStroke <- predict(mylogit, 
                                       newdata = strok_test, 
                                       type = "response")
-strok_test$prevalentStroke
+#strok_test$prevalentStroke
 ```
 
-<br>
 
 #### 1. **Odds Given Prevalence Of Stroke In family history.**
 
@@ -203,7 +203,7 @@ strok_test$prevalentStroke
 
 #### 2. **Odds Given For Male Vs Female**
 
-```{r include=FALSE}
+```{r MF, cache=TRUE}
 male_test <- with(df, data.frame(male = c("0","1"), # Factor of Interest
                                  age = mean(age),
                                  education = "0",
@@ -234,7 +234,7 @@ male_test$male <- predict(mylogit, newdata = male_test, type = "response")
 #### 3. **Odds Prevalence of Hypertension In Family History**
 
 
-```{r include=FALSE}
+```{r hyperT, cache=TRUE}
 hyperT_test <- with(df, data.frame(male = "0",
                                    age = mean(age),
                                    education = "0",
@@ -266,7 +266,7 @@ hyperT_test$prevalentHyp <- predict(mylogit, newdata = hyperT_test, type = "resp
 #### 4. **Odds Given Age**
 
 
-```{r include=FALSE}
+```{r Age, cache=TRUE}
 age_test <- with(df, data.frame(male = "0",
                                    age = c(20,30,40,50,60,70,80),
                                    education = "0",
@@ -300,7 +300,7 @@ age_test$age <- predict(mylogit, newdata = age_test, type = "response")
 
 #### 5. **Odds Given Number Of Cigarettes Per Day**
 
-```{r include=FALSE}
+```{r Cigarettes, cache=TRUE}
 cigs_per_day <- with(df, data.frame(male = "0",
                                     age = mean(age),
                                     education = "0",
@@ -334,8 +334,8 @@ cigs_per_day$cigsPerDay <- predict(mylogit, newdata = cigs_per_day, type = "resp
 
 #### 6. **Odds Given Systolic Blood Pressure**
 
-```{r include=FALSE}
-#summary(df$sysBP)
+```{r BP, cache=TRUE}
+summary(df$sysBP)
 # Min. 1st Qu.  Median    Mean  3rd Qu.  Max. 
 # 83.5   117.0   128.0   132.4   144.0   295.0 
 
@@ -355,7 +355,7 @@ sysBP_calc <- with(df, data.frame(male = "0",
 
 sysBP_calc$sysBP <- predict(mylogit, newdata = sysBP_calc, type = "response")
 
-sysBP_calc$sysBP
+#sysBP_calc$sysBP
 ```
 
    
@@ -370,7 +370,7 @@ sysBP_calc$sysBP
 #### 7. **Odds Given Glucose Levels**
 
 
-```{r include=FALSE}
+```{r Glucose, cache=TRUE}
 summary(df$glucose)
 #    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 #     40      72      80      82      85     394 
@@ -412,15 +412,6 @@ glucose_calc$glucose <- predict(mylogit, newdata = glucose_calc, type = "respons
 
 2.	Small number of observations predict that there will be rain tomorrow. Majority of observations predict that there will be no rain tomorrow.
 
-3.	The model shows no signs of overfitting.
-
-4.	Increasing the value of C results in higher test set accuracy and also a slightly increased training set accuracy. So, we can conclude that a more complex model should perform better.
-
-5.	Increasing the threshold level results in increased accuracy.
-
-6.	ROC AUC of our model approaches towards 1. So, we can conclude that our classifier does a good job in predicting whether it will rain tomorrow or not.
-
-7.	Our original model accuracy score is 0.8501 whereas accuracy score after RFECV is 0.8500. So, we can obtain approximately similar accuracy but with reduced set of features.
 
 
 
