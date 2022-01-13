@@ -1,7 +1,8 @@
-## framingham_logit
+## Logistic_with_R
 
-1. Purpose: This R markdown document displays my understanding of logistic regression and R. This report is part one of two articles describing Logit. The first article is a discussion of the Logistic Regression followed by a typical report.
-2. Data: Framingham Heart Disease Study, [mysdata](https://github.com/mccurcio/Logistic_with_R/blob/main/fhds_dataset.zip)
+1. Purpose: This R markdown document displays my understanding of logistic regression and R. This report is part one of two articles describing Logit. 
+  - [Logisitc Redgression Report](http://htmlpreview.github.io/?https://github.com/mccurcio/Logistic_with_R/blob/main/2022-01-03-fhs-logit-report.html)
+2. Data: Framingham Heart Disease Study, [FHS_data](https://github.com/mccurcio/Logistic_with_R/blob/main/fhds_dataset.zip)
 3. Conclusion: We find seven (7) factors and their related odds leading to cardiovascular disease.
 
 | No. | Factors                                      | Approximate Odds Over Mean               |
@@ -20,27 +21,19 @@ NOTES: I will use Logistic Regression to determine the Probability of Heart Dise
 
 ## Assumptions of Logistic Regression
 
-Logistic Regression does not require the key assumptions of linear regression and generalized linear models. In particular, it does not require the following key assumptions of linear regression:-
+1.	Logistic Regression does not require a linear relationship between the independent and dependent variables. 
 
-1.	Logistic Regression does not follow the assumption of linearity. It does not require a linear relationship between the independent and dependent variables. 
+2.	The residuals from the model do not need to follow the normal distribution.
 
-2.	The residuals or error terms do not need to follow the normal distribution.
-
-3.	Logistic Regression does not require the assumption of homoscedasticity. Homoscedasticity means all the variables in the model have same variance. So, in Logistic Regression model, the variables may have different variance.
+3.	Logistic Regression does not require the assumption of homoscedasticity. Homoscedasticity means all the variables in the model have the same variance. So, the variables may have different variances in the Logistic Regression model.
 
 4.	The dependent variable in Logistic Regression is not measured on an interval or ratio scale.
 
-The Logistic Regression model requires several key assumptions. These are as follows:-
+5.	Logistic Regression algorithm requires little or no multicollinearity among the independent variables. It means that the independent variables should not be too highly correlated with each other.
 
-1.	Logistic Regression model requires the dependent variable to be binary, multinomial or ordinal in nature. 
+6.	Logistic Regression model assumes linearity of independent variables and log odds.
 
-2.	It requires the observations to be independent of each other. So, the observations should not come from repeated measurements.
-
-3.	Logistic Regression algorithm requires little or no multicollinearity among the independent variables. It means that the independent variables should not be too highly correlated with each other.
-
-4.	Logistic Regression model assumes linearity of independent variables and log odds.
-
-5.	The success of Logistic Regression model depends on the sample sizes. Typically, it requires a large sample size to achieve the high accuracy.
+7.	The success of Logistic Regression model depends on the sample sizes. Typically, it requires a large sample size to achieve the high accuracy.
 
 
 

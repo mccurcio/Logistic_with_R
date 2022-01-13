@@ -18,17 +18,19 @@ output:
 
 1. This R markdown document displays my understanding of logistic regression and R. This report is part one of two articles describing Logit. The first article is a discussion of the Logistic Regression followed by a typical report.
 
-1. We find seven (7) factors and their related odds leading to cardiovascular disease.
+1. We find seven (7) of the 13 factors lead to cardiovascular disease. The odds related to each factor were calculated from the study.
+
+<br>
 
 | No. | Factors                                      | Approximate Odds Over Mean               |
-| :-- | :------------------------------------------- | :--------------------------------------- |
-| 1   | Prevalence Of Stroke In Family History.      | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;240% |
-| 2   | Male Vs Female                               | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;150% |
-| 3   | Prevalence Of Hypertension In Family History | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;130% |
-| 4   | Age                                          | < 2,800%                                 |
-| 5   | Cigarettes Per Day                           | < &nbsp;&nbsp;&nbsp;210%                 |
-| 6   | Systolic Blood Pressure                      | < &nbsp;&nbsp;&nbsp;780%                 |
-| 7   | Glucose Levels                               | < &nbsp;&nbsp;&nbsp;250%                 |
+| :-| :------------------------------------------- | :--------------------------------------- |
+| 1 | Prevalence Of Stroke In Family History       | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;240% |
+| 2 | Male Vs Female                               | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;150% |
+| 3 | Prevalence Of Hypertension In Family History | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;130% |
+| 4 | Age                                          | < 2,800%                                 |
+| 5 | Cigarettes Per Day                           | < &nbsp;&nbsp;&nbsp;210%                 |
+| 6 | Systolic Blood Pressure                      | < &nbsp;&nbsp;&nbsp;780%                 |
+| 7 | Glucose Levels                               | < &nbsp;&nbsp;&nbsp;250%                 |
 
 [^1]:The Framingham Heart Study: https://framinghamheartstudy.org/fhs-about/
 
