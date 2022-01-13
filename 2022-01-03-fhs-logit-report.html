@@ -176,32 +176,36 @@ pre code {
 <h2>I. Executive Summary</h2>
 <p><br></p>
 <ol style="list-style-type: decimal">
-<li><p>This report investigates the risk factors that lead to cardiovascular disease (CVD) using data from the Framingham Heart Study.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p></li>
-<li><p>This R markdown document will demonstrate my understanding of logistic regression and R. This report is part one of two articles describing Logit.</p></li>
-<li><p>Using this Heart Study data we find the five most important factors and the odds related to them.</p>
+<li><p>This report investigates the risk factors leading to cardiovascular disease (CVD) using the Framingham Heart Study data.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p></li>
+<li><p>This R markdown document displays my understanding of logistic regression and R. This report is part one of two articles describing Logit. The first article is a discussion of the Logistic Regression followed by a typical report.</p></li>
+<li><p>Using the Framingham Heart Study data, we find seven (7) factors and their related odds leading to cardiovascular disease.</p>
 <ul>
-<li>By being a men vs women, the odds of acquiring CVD is an increase x.</li>
+<li>Shows odds</li>
 </ul></li>
 </ol>
 <p><br></p>
 </div>
-<div id="ii.-disscussion" class="section level2">
-<h2>II. Disscussion</h2>
+<div id="ii.-discussion" class="section level2">
+<h2>II. Discussion</h2>
 <p><br></p>
 <div id="a.-logistic-regression-is-an-excellent-choice-for-this-investigation" class="section level4">
 <h4>A. Logistic regression is an excellent choice for this investigation:</h4>
 <ol style="list-style-type: decimal">
 <li><p>The outcome, the absence(0) or presence(1) of cardiovascular disease, is a binary response.</p></li>
-<li><p>When using logistic regression, we are not simply predicting whether a person does or does not have a disease. <strong>We are interested in the variables most highly associated with that disease and the probability of being in one case or another</strong>. Based on a regression model, we better understand the “predicted probability of being a case.”</p></li>
-<li><p>Using the probabilities of being in one case (P) versus (1-P), <strong>we can further generalize to find the odds</strong>, <span class="math inline">\(\small P/(1-P)\)</span> for each variable.</p></li>
+<li><p>Logistic regression does not simply predict whether a person has a disease or not. Logistic regression can help determine which variable(s) are associated with cardiovascular disease.</p></li>
+<li><p>Logistic regression produces probabilities of being in one case or another. Based on our regression model, Using these probabilities, one case (P) versus (1-P), we can generalize to find the odds, <span class="math inline">\(\small P/(1-P)\)</span> for each variable.</p></li>
 </ol>
 <p><br></p>
 </div>
 <div id="b.-independent-and-dependent-variables" class="section level4">
 <h4>B. Independent and Dependent Variables</h4>
-<p>This longitudinal study includes thirteen independent variables including 4,133 participants over a ten year period. Patients were evaluated for the <strong>presence or absence of cardio-vascular disease</strong> between 1948-1960.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> The model is fit with 13 independent variables. Where the outcome is the <strong>absence or presence of Cardiac Heart Disease After Ten Years</strong>, abbreviated <code>TenYearCHD</code>.</p>
+<ul>
+<li><p>This longitudinal study includes 4,133 participants over a ten year period.</p></li>
+<li><p>The model is fit with 13 independent variables.</p></li>
+<li><p>Patients were evaluated for the absence or presence of Cardiac Heart Disease After Ten Years**, abbreviated <code>TenYearCHD</code> between 1948-1960.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p></li>
+</ul>
 <p><br></p>
-<p><strong>Dependent variable</strong>: <code>TenYearCHD</code></p>
+<p><strong>One dependent variable</strong>: <code>TenYearCHD</code></p>
 <ul>
 <li>0 = Absence of cardio-vascular disease<br />
 </li>
@@ -279,7 +283,7 @@ pre code {
 </div>
 <div id="iii.-experimental-results" class="section level2">
 <h2>III. Experimental Results</h2>
-<p><br> <br></p>
+<p><br></p>
 <div id="a.-logistic-regression-model" class="section level4">
 <h4>A. Logistic Regression Model</h4>
 <pre class="r"><code>mylogit &lt;- glm(TenYearCHD ~ male + age + education + 
@@ -326,171 +330,141 @@ summary(mylogit)</code></pre>
 ## AIC: 3159
 ## 
 ## Number of Fisher Scoring iterations: 5</code></pre>
-<div id="the-7-most-significant-variables" class="section level5">
-<h5>The 7 most significant variables</h5>
-<p>Seven of the independent variables with <span class="math inline">\(\small \alpha &lt; 0.05\)</span> and considered significant are:</p>
+<p><br></p>
+<ul>
+<li><p><strong>7 most significant variables</strong></p></li>
+<li><p>Seven predictors have <span class="math inline">\(\small \alpha &lt; 0.05\)</span>. They are significant and associated with acquiring cardiovascular disease.</p></li>
+</ul>
 <table>
 <thead>
 <tr class="header">
 <th align="left">Rank</th>
 <th align="left">Risk Factor</th>
-<th align="left">Log Odds Estimate</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Prevalence of Stroke1</td>
-<td align="left">1.00721</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Male1</td>
-<td align="left">0.48093</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">Prevalence of Hypertension1</td>
-<td align="left">0.25864</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Age</td>
-<td align="left">0.06263</td>
 </tr>
 <tr class="odd">
 <td align="left">5</td>
 <td align="left">Cigarettes Per Day</td>
-<td align="left">0.02087</td>
 </tr>
 <tr class="even">
 <td align="left">6</td>
 <td align="left">Systolic Blood Pressure</td>
-<td align="left">0.01498</td>
 </tr>
 <tr class="odd">
 <td align="left">7</td>
 <td align="left">Glucose</td>
-<td align="left">0.00619</td>
 </tr>
 </tbody>
 </table>
-<p><br> <br></p>
+<p><br></p>
 </div>
-</div>
-<div id="b.-wald-test" class="section level4">
-<h4>B. Wald Test</h4>
-<p><a href="https://www.mbaskool.com/business-concepts/statistics/6916-wald-test.html" class="uri">https://www.mbaskool.com/business-concepts/statistics/6916-wald-test.html</a> <a href="https://www.statology.org/wald-test-in-r/" class="uri">https://www.statology.org/wald-test-in-r/</a> <a href="https://stats.oarc.ucla.edu/other/mult-pkg/faq/general/faqhow-are-the-likelihood-ratio-wald-and-lagrange-multiplier-score-tests-different-andor-similar/" class="uri">https://stats.oarc.ucla.edu/other/mult-pkg/faq/general/faqhow-are-the-likelihood-ratio-wald-and-lagrange-multiplier-score-tests-different-andor-similar/</a> <a href="https://handwiki.org/wiki/Wald_test" class="uri">https://handwiki.org/wiki/Wald_test</a></p>
+<div id="b.-wald-test-do-the-seven-factors-fit-our-model" class="section level4">
+<h4>B. Wald Test: Do The Seven Factors Fit Our Model</h4>
 <ul>
-<li><p><a href="https://questionerlab.com/what-is-the-use-of-wald-test-in-logistic-regression" class="uri">https://questionerlab.com/what-is-the-use-of-wald-test-in-logistic-regression</a> <a href="https://stats.oarc.ucla.edu/r/dae/logit-regression/" class="uri">https://stats.oarc.ucla.edu/r/dae/logit-regression/</a></p></li>
-<li><p><a href="https://bookdown.org/mike/data_analysis/wald-test.html" class="uri">https://bookdown.org/mike/data_analysis/wald-test.html</a></p></li>
-<li><p><a href="https://bookdown.org/mike/data_analysis/hypothesis-testing.html#wald-test" class="uri">https://bookdown.org/mike/data_analysis/hypothesis-testing.html#wald-test</a></p></li>
+<li><p>The Wald Chi-Square Test can help determine if our proposed model is valuable and significant.</p></li>
+<li><p>By testing seven (7) significant risk factors we see that this model has a p-value = 0.0. Therefore this model does</p></li>
 </ul>
-<pre class="r"><code>wald.test(b=coef(mylogit), Sigma=vcov(mylogit), Terms=c(2,3,5,6,7,10,14))</code></pre>
+<pre class="r"><code>wald.test(b = coef(mylogit), 
+          Sigma = vcov(mylogit), 
+          Terms = c(2, 3, 5, 6, 7, 10, 14))</code></pre>
 <pre><code>## Wald test:
 ## ----------
 ## 
 ## Chi-squared test:
 ## X2 = 242.2, df = 7, P(&gt; X2) = 0.0</code></pre>
-<pre class="r"><code>wald.test(b = coef(mylogit), Sigma = vcov(mylogit), Terms = c(2:14))</code></pre>
-<pre><code>## Wald test:
-## ----------
-## 
-## Chi-squared test:
-## X2 = 333.7, df = 13, P(&gt; X2) = 0.0</code></pre>
-<pre class="r"><code>l &lt;- cbind(0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1)
-wald.test(b = coef(mylogit), Sigma = vcov(mylogit), L = l)</code></pre>
-<pre><code>## Wald test:
-## ----------
-## 
-## Chi-squared test:
-## X2 = 16.1, df = 1, P(&gt; X2) = 6.2e-05</code></pre>
 <ul>
-<li>Do The Predictor Variables Describe Our Model</li>
+<li><p>The Wald test generates a <em>P-value &lt;&lt; 0.001</em>.</p></li>
+<li><p>We can conclude the seven (7) parameters are significant and useful in describing cardiovascular disease.</p></li>
 </ul>
-<p>The Wald test is a test of significance for individual regression coefficients in a logistic regression.</p>
-<p>Considering the 13 predictors, neglecting the intercept, we see <span class="math inline">\(\chi^2\)</span> = 333.7 with 13 degrees of freedom. This gives <em>P &lt;&lt; 0.001</em>.</p>
-<p>From this we can conclude that the parameters are significant and do represent useful in describing CVD.</p>
-<p><br> <br></p>
+<p><br></p>
 </div>
-<div id="d.-determination-of-odds" class="section level4">
-<h4>D. Determination of Odds</h4>
-<p>We will start by calculating the predicted probability of CHCD at with respect to the five most important variables.</p>
-</div>
-</div>
-<div id="needs-more-explanation" class="section level2">
-<h2>NEEDS MORE EXPLANATION</h2>
-<p>holding each one constant at their means. First we create and view the data frame. - Given All Other Values Held Constant</p>
-<div id="example-calculations-shown-for-prevalence-of-stroke-factor" class="section level4">
-<h4>Example calculations shown for Prevalence of Stroke Factor</h4>
+<div id="c.-determination-of-odds-for-seven-variables" class="section level4">
+<h4>C. Determination of Odds for Seven Variables</h4>
+<ul>
+<li><p>We can calculate the odds of acquiring cardiovascular disease for each of the seven variables.</p></li>
+<li><p>By holding all other values constant we create a dataframe that investigates the odds given Prevalence of Stroke</p></li>
+</ul>
 <pre class="r"><code>strok_test &lt;- with(df, data.frame(male = &quot;0&quot;,
-                                age = mean(age),
-                                education = &quot;0&quot;,
-                                cigsPerDay = 0,
-                                prevalentHyp = &quot;0&quot;,
-                                diabetes = &quot;0&quot;,
-                                totChol = mean(totChol),
-                                sysBP = mean(sysBP),
-                                diaBP = mean(diaBP),
-                                BMI = mean(BMI),
-                                heartRate = mean(heartRate),
-                                glucose = mean(glucose),
-                                prevalentStroke = c(&quot;0&quot;,&quot;1&quot;))) # Factor of Interest
+                                  age = mean(age),
+                                  education = &quot;0&quot;,
+                                  cigsPerDay = 0, # Non-smoker
+                                  prevalentHyp = &quot;0&quot;,
+                                  diabetes = &quot;0&quot;,
+                                  totChol = mean(totChol),
+                                  sysBP = mean(sysBP),
+                                  diaBP = mean(diaBP),
+                                  BMI = mean(BMI),
+                                  heartRate = mean(heartRate),
+                                  glucose = mean(glucose),
+                                  prevalentStroke = c(&quot;0&quot;, &quot;1&quot;)) 
+                   )
 
-# REMEMBER convert prevalentStroke from numeric to FACTOR
+# Convert prevalentStroke from Numeric to FACTOR
 strok_test$prevalentStroke &lt;- as.factor(strok_test$prevalentStroke) 
 # str(strok_test)
 
-strok_test$prevalentStroke &lt;- predict(mylogit, newdata = strok_test, type = &quot;response&quot;)
-#strok_test$prevalentStroke</code></pre>
-<p><br> <br></p>
+strok_test$prevalentStroke &lt;- predict(mylogit, 
+                                      newdata = strok_test, 
+                                      type = &quot;response&quot;)
+strok_test$prevalentStroke</code></pre>
+<pre><code>## [1] 0.077783 0.187605</code></pre>
+<p><br></p>
 </div>
-<div id="e.-prevalence-of-stroke-predicted-probability" class="section level4">
-<h4>E. Prevalence of Stroke Predicted Probability</h4>
-<div id="probabilities-of-acquiring-cvd-given-prevalence-of-stroke" class="section level5">
-<h5>Probabilities Of Acquiring CVD Given Prevalence of Stroke</h5>
+<div id="odds-given-prevalence-of-stroke-in-family-history." class="section level4">
+<h4>1. <strong>Odds Given Prevalence Of Stroke In family history.</strong></h4>
 <ol style="list-style-type: decimal">
-<li>NO Prevalence of Stroke: 0.07778</li>
 <li>WITH Prevalence of Stroke: 0.18761</li>
+<li>NO Prevalence of Stroke: 0.07778</li>
 </ol>
-<p>Odds = 2.4119</p>
-<hr />
-<p><br> <br></p>
+<ul>
+<li><strong>Odds = 2.4119</strong></li>
+</ul>
+<p><br></p>
 </div>
-</div>
-<div id="f.-odds-of-cvd-given-male-vs-female" class="section level4">
-<h4>F. Odds of CVD Given Male Vs Female</h4>
-<div id="predicted-probability-of-acquiring-cvd-for-males-vs-females" class="section level5">
-<h5>Predicted Probability Of Acquiring CVD for Males vs Females</h5>
+<div id="odds-given-for-male-vs-female" class="section level4">
+<h4>2. <strong>Odds Given For Male Vs Female</strong></h4>
 <ol style="list-style-type: decimal">
-<li>Female: 0.07778</li>
 <li>Males: 0.12005</li>
+<li>Female: 0.07778</li>
 </ol>
-<p>Odds = 1.54343</p>
-<hr />
-<p><br> <br></p>
+<ul>
+<li><strong>Odds = 1.54343</strong></li>
+</ul>
+<p><br></p>
 </div>
-</div>
-<div id="g.-odds-of-cvd-given-prevalence-of-hypertension" class="section level4">
-<h4>G. Odds of CVD Given Prevalence of Hypertension</h4>
-<div id="predicted-probability-of-acquiring-cvd-given-prevalence-of-hypertension" class="section level5">
-<h5>Predicted Probability Of Acquiring CVD Given Prevalence of Hypertension</h5>
+<div id="odds-prevalence-of-hypertension-in-family-history" class="section level4">
+<h4>3. <strong>Odds Prevalence of Hypertension In Family History</strong></h4>
 <ol style="list-style-type: decimal">
-<li>WITH Prevalence of Hypertension, NO: 0.07778</li>
-<li>WITH Prevalence of Hypertension, YES: 0.09848</li>
+<li>WITH Prevalence of Hypertension: 0.09848</li>
+<li>NO Prevalence of Hypertension: 0.07778</li>
 </ol>
-<p>Odds = 1.2661</p>
-<p><br> <br></p>
+<ul>
+<li><strong>Odds = 1.2661</strong></li>
+</ul>
+<p><br></p>
 </div>
-</div>
-<div id="i.-odds-of-cvd-given-age" class="section level4">
-<h4>I. Odds of CVD Given Age</h4>
-<div id="predicted-probability-of-acquiring-cvd-given-differing-ages" class="section level5">
-<h5>Predicted Probability Of Acquiring CVD Given Differing Ages</h5>
+<div id="odds-given-age" class="section level4">
+<h4>4. <strong>Odds Given Age</strong></h4>
 <table>
 <thead>
 <tr class="header">
-<th align="right">No.</th>
 <th align="right">Age (years)</th>
 <th align="center">Probability Given Age</th>
 <th align="center">Odds Compared to 20 yr old</th>
@@ -498,60 +472,166 @@ strok_test$prevalentStroke &lt;- predict(mylogit, newdata = strok_test, type = &
 </thead>
 <tbody>
 <tr class="odd">
-<td align="right">1</td>
 <td align="right">20</td>
 <td align="center">0.01307</td>
 <td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="right">2</td>
 <td align="right">30</td>
 <td align="center">0.02418</td>
 <td align="center">1.84969</td>
 </tr>
 <tr class="odd">
-<td align="right">3</td>
 <td align="right">40</td>
 <td align="center">0.0443</td>
 <td align="center">3.38895</td>
 </tr>
 <tr class="even">
-<td align="right">4</td>
 <td align="right">50</td>
 <td align="center">0.0798</td>
 <td align="center">6.1044</td>
 </tr>
 <tr class="odd">
-<td align="right">5</td>
 <td align="right">60</td>
 <td align="center">0.13958</td>
 <td align="center">10.67785</td>
 </tr>
 <tr class="even">
-<td align="right">6</td>
 <td align="right">70</td>
 <td align="center">0.23282</td>
 <td align="center">17.81084</td>
 </tr>
 <tr class="odd">
-<td align="right">7</td>
 <td align="right">80</td>
 <td align="center">0.36214</td>
 <td align="center">27.70331</td>
 </tr>
 </tbody>
 </table>
-<p><br> <br></p>
+<p><br></p>
 </div>
+<div id="odds-given-number-of-cigarettes-per-day" class="section level4">
+<h4>5. <strong>Odds Given Number Of Cigarettes Per Day</strong></h4>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Age (years)</th>
+<th align="center">Probability Given Age</th>
+<th align="center">Odds Compared to Zero Cigarettes Per Day</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="center">0.07778</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="center">0.09414</td>
+<td align="center">1.21027</td>
+</tr>
+<tr class="odd">
+<td align="right">20</td>
+<td align="center">0.11351</td>
+<td align="center">1.45932</td>
+</tr>
+<tr class="even">
+<td align="right">30</td>
+<td align="center">0.13627</td>
+<td align="center">1.7519</td>
+</tr>
+<tr class="odd">
+<td align="right">40</td>
+<td align="center">0.16275</td>
+<td align="center">2.09238</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+</div>
+<div id="odds-given-systolic-blood-pressure" class="section level4">
+<h4>6. <strong>Odds Given Systolic Blood Pressure</strong></h4>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Systolic BP</th>
+<th align="center">Probability Given Systolic BP</th>
+<th align="center">Odds Systolic BP</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">117</td>
+<td align="center">0.06279</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="right">128</td>
+<td align="center">0.07322</td>
+<td align="center">1.16607</td>
+</tr>
+<tr class="odd">
+<td align="right">144</td>
+<td align="center">0.09124</td>
+<td align="center">1.45318</td>
+</tr>
+<tr class="even">
+<td align="right">Max 295</td>
+<td align="center">0.49104</td>
+<td align="center">7.8204</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+</div>
+<div id="odds-given-glucose-levels" class="section level4">
+<h4>7. <strong>Odds Given Glucose Levels</strong></h4>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Glucose</th>
+<th align="center">Probabilities</th>
+<th align="center">Odds Given Glucose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">72</td>
+<td align="center">0.094843</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="right">80</td>
+<td align="center">0.100852</td>
+<td align="center">1.06336</td>
+</tr>
+<tr class="odd">
+<td align="right">85</td>
+<td align="center">0.110194</td>
+<td align="center">1.16186</td>
+</tr>
+<tr class="even">
+<td align="right">Max 394</td>
+<td align="center">0.239738</td>
+<td align="center">2.52774</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
 </div>
 </div>
 <div id="iv.-conclusion" class="section level2">
 <h2>IV. Conclusion</h2>
-<hr />
-<p>Notes - USE <a href="https://stats.idre.ucla.edu/r/dae/logit-regression/" class="uri">https://stats.idre.ucla.edu/r/dae/logit-regression/</a> for analysis</p>
-<ul>
-<li>USE <a href="https://stats.idre.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/" class="uri">https://stats.idre.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/</a> for interpretation</li>
-</ul>
+<ol style="list-style-type: decimal">
+<li><p>The logistic regression model accuracy score is 0.8501. So, the model does a very good job in predicting whether or not an individual will acquire cardiovascular disease.</p></li>
+<li><p>Small number of observations predict that there will be rain tomorrow. Majority of observations predict that there will be no rain tomorrow.</p></li>
+<li><p>The model shows no signs of overfitting.</p></li>
+<li><p>Increasing the value of C results in higher test set accuracy and also a slightly increased training set accuracy. So, we can conclude that a more complex model should perform better.</p></li>
+<li><p>Increasing the threshold level results in increased accuracy.</p></li>
+<li><p>ROC AUC of our model approaches towards 1. So, we can conclude that our classifier does a good job in predicting whether it will rain tomorrow or not.</p></li>
+<li><p>Our original model accuracy score is 0.8501 whereas accuracy score after RFECV is 0.8500. So, we can obtain approximately similar accuracy but with reduced set of features.</p></li>
+</ol>
 </div>
 <div class="footnotes">
 <hr />

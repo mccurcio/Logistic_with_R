@@ -12,20 +12,19 @@ output: html_document
 
 <br>
 
-1. This report investigates the risk factors that lead to cardiovascular disease (CVD) using data from the Framingham Heart Study.[^1]
+1. This report investigates the risk factors leading to cardiovascular disease (CVD) using the Framingham Heart Study data.[^1]
 
-1. This R markdown document will demonstrate my understanding of logistic regression and R. This report is part one of two articles describing Logit.
+1. This R markdown document displays my understanding of logistic regression and R. This report is part one of two articles describing Logit. The first article is a discussion of the Logistic Regression followed by a typical report.
 
-1. Using this Heart Study data we find the five most important factors and the odds related to them.
+1. Using the Framingham Heart Study data, we find seven (7) factors and their related odds leading to cardiovascular disease.
 
-    * By being a men vs women, the odds of acquiring CVD is an increase x.   
+    * Shows odds   
 
 [^1]:The Framingham Heart Study: https://framinghamheartstudy.org/fhs-about/
 
-
 <br>
 
-## II. Disscussion
+## II. Discussion
 
 <br>
 
@@ -33,15 +32,20 @@ output: html_document
 
 1. The outcome, the absence(0) or presence(1) of cardiovascular disease, is a binary response.
 
-1. When using logistic regression, we are not simply predicting whether a person does or does not have a disease. **We are interested in the variables most highly associated with that disease and the probability of being in one case or another**. Based on our regression model, we hope to better understand the "predicted probability of being a case."
+1. Logistic regression does not simply predict whether a person has a disease or not. Logistic regression can help determine which variable(s) are associated with cardiovascular disease. 
 
-1. Using the probabilities of being in one case (P) versus (1-P), **we can further generalize to find the odds**, $\small P/(1-P)$ for each variable.
+1. Logistic regression produces probabilities of being in one case or another. Based on our regression model, Using these probabilities, one case (P) versus (1-P), we can generalize to find the odds, $\small P/(1-P)$ for each variable.
+
 
 <br>
 
 #### B. Independent and Dependent Variables
 
-This longitudinal study includes thirteen independent variables including 4,133 participants over a ten year period. Patients were evaluated for the **presence or absence of cardio-vascular disease** between 1948-1960.[^2] The model is fit with 13 independent variables. Where the outcome is the **absence or presence of Cardiac Heart Disease After Ten Years**, abbreviated `TenYearCHD`.
+- This longitudinal study includes 4,133 participants over a ten year period. 
+
+- The model is fit with 13 independent variables. 
+
+- Patients were evaluated for the absence or presence of Cardiac Heart Disease After Ten Years**, abbreviated `TenYearCHD` between 1948-1960.[^2]
 
 [^2]:The Framingham Heart Study can be found at: https://www.kaggle.com/captainozlem/framingham-chd-preprocessed-data
 
@@ -69,8 +73,8 @@ This longitudinal study includes thirteen independent variables including 4,133 
 
 ## III. Experimental Results
 
-```{r DONOTSHOW, message=FALSE, warning=FALSE, include=FALSE}
-# DO NOT SHOW
+```{r LoadData, message=FALSE, warning=FALSE, include=FALSE}
+# DO NOT SHOW IN FINAL REPORT
 options(tinytex.verbose = FALSE)
 options(digits = 5) 
 
@@ -91,11 +95,8 @@ df <- read_csv("CHD_preprocessed.csv",
                       prevalentHyp = col_factor(levels = c("0", "1")), 
                       diabetes = col_factor(levels = c("0", "1")), 
                       TenYearCHD = col_factor(levels = c("0", "1"))))
-#view(df)
 ```
 
-
-<br>
 <br>
 
 #### A. Logistic Regression Model
@@ -112,152 +113,54 @@ mylogit <- glm(TenYearCHD ~ male + age + education +
 summary(mylogit)
 ```
 
+<br>
 
-##### The 7 most significant variables
+- **7 most significant variables**
 
-The seven predictors have $\small \alpha < 0.05$ and are associated with acquiring cardiovascular disease.
+- Seven predictors have $\small \alpha < 0.05$. They are significant and associated with acquiring cardiovascular disease.
 
-Therefore, seven of the independent variables are statistically significant. 
 
-The log odds estimates represent the change per one unit of change for each factor.
-
-These log odds will become more important later on when they are converted to odds.
-
-| Rank | Risk Factor                 | Log Odds Estimate |
-| :--- | :-------------------------- | :---------------- |
-| 1    | Prevalence of Stroke1       | 1.00721           |
-| 2    | Male1                       | 0.48093           |
-| 3    | Prevalence of Hypertension1 | 0.25864           |
-| 4    | Age                         | 0.06263           |
-| 5    | Cigarettes Per Day          | 0.02087           |
-| 6    | Systolic Blood Pressure     | 0.01498           |
-| 7    | Glucose                     | 0.00619           |
+| Rank | Risk Factor                 |
+| :--- | :-------------------------- |
+| 1    | Prevalence of Stroke1       |
+| 2    | Male1                       |
+| 3    | Prevalence of Hypertension1 |
+| 4    | Age                         |
+| 5    | Cigarettes Per Day          |
+| 6    | Systolic Blood Pressure     |
+| 7    | Glucose                     |
 
 
 <br>
-<br>
 
-#### B. Wald Test  
+#### B. Wald Test: Do The Seven Factors Fit Our Model
 
-```{r eval=FALSE, include=FALSE}
-# https://www.mbaskool.com/business-concepts/statistics/6916-wald-test.html
-# https://www.statology.org/wald-test-in-r/
-# https://stats.oarc.ucla.edu/other/mult-pkg/faq/general/faqhow-are-the-likelihood-ratio-wald-and-lagrange-multiplier-score-tests-different-andor-similar/
-# https://handwiki.org/wiki/Wald_test
-# 
-# * https://questionerlab.com/what-is-the-use-of-wald-test-in-logistic-regression
-# https://stats.oarc.ucla.edu/r/dae/logit-regression/
-# 
-# * https://bookdown.org/mike/data_analysis/wald-test.html
-# 
-# * https://bookdown.org/mike/data_analysis/hypothesis-testing.html#wald-test
-```
+- The Wald Chi-Square Test can help determine if our proposed model is valuable and significant.  
 
+- By testing seven (7) significant risk factors we see that this model has a p-value = 0.0. Therefore this model does 
 ```{r}
-wald.test(b=coef(mylogit), Sigma=vcov(mylogit), Terms=c(2,3,5,6,7,10,14))
+wald.test(b = coef(mylogit), 
+          Sigma = vcov(mylogit), 
+          Terms = c(2, 3, 5, 6, 7, 10, 14))
 ```
 
+- The Wald test generates a *P-value << 0.001*. 
 
-
-```{r}
-wald.test(b = coef(mylogit), Sigma = vcov(mylogit), Terms = c(2:14))
-
-```
-
-
-
-```{r}
-l <- cbind(0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1)
-wald.test(b = coef(mylogit), Sigma = vcov(mylogit), L = l)
-
-```
-
-
-
-- Do The Predictor Variables Describe Our Model
-
-
-The Wald test is a test of significance for individual regression coefficients in a logistic regression. 
-
-Considering the 13 predictors, neglecting the intercept, we see $\chi^2$ = 333.7 with 13 degrees of freedom. This gives *P << 0.001*.
-
-From this we can conclude that the parameters are significant and do represent useful in describing CVD.
-
+- We can conclude the seven (7) parameters are significant and useful in describing cardiovascular disease.
 
 <br>
-<br>
 
+#### C. Determination of Odds for Seven Variables
 
+- We can calculate the odds of acquiring cardiovascular disease for each of the seven variables. 
 
-#### C thru I:   Determination of Odds 
+- By holding all other values constant we create a dataframe that investigates the odds given Prevalence of Stroke
 
-| 1    | Prevalence of Stroke1       | 1.00721           |
-| 2    | Male1                       | 0.48093           |
-| 3    | Prevalence of Hypertension1 | 0.25864           |
-| 4    | Age                         | 0.06263           |
-| 5    | Cigarettes Per Day          | 0.02087           |
-| 6    | Systolic Blood Pressure     | 0.01498           |
-| 7    | Glucose                     | 0.00619           |
-
-We will start by calculating the predicted probability of CHCD at with respect to the five most important variables.  
-
-## NEEDS MORE EXPLANATION
-holding each one constant at their means. First we create and view the data frame.
-    - Given All Other Values Held Constant
-    
-#### Example calculations shown for Prevalence of Stroke Factor
-
-```{r STROKE}
+```{r Stroke}
 strok_test <- with(df, data.frame(male = "0",
-                                age = mean(age),
-                                education = "0",
-                                cigsPerDay = 0,
-                                prevalentHyp = "0",
-                                diabetes = "0",
-                                totChol = mean(totChol),
-                                sysBP = mean(sysBP),
-                                diaBP = mean(diaBP),
-                                BMI = mean(BMI),
-                                heartRate = mean(heartRate),
-                                glucose = mean(glucose),
-                                prevalentStroke = c("0","1"))) # Factor of Interest
-
-# REMEMBER convert prevalentStroke from numeric to FACTOR
-strok_test$prevalentStroke <- as.factor(strok_test$prevalentStroke) 
-# str(strok_test)
-
-strok_test$prevalentStroke <- predict(mylogit, newdata = strok_test, type = "response")
-#strok_test$prevalentStroke
-```
-
-
-<br>
-<br>
-
-#### D. Prevalence of Stroke Predicted Probability
-
-
-#####  Probabilities Of Acquiring CVD Given Prevalence of Stroke
-
-1. NO Prevalence of Stroke: `r strok_test$prevalentStroke[[1]]` 
-2. WITH Prevalence of Stroke: `r strok_test$prevalentStroke[[2]]`
-
-Odds = `r strok_test$prevalentStroke[[2]]/strok_test$prevalentStroke[[1]]`
-
-
-
-----
-
-<br>
-<br>
-
-#### F. Odds of CVD Given Male Vs Female
-
-```{r include=FALSE}
-male_test <- with(df, data.frame(male = c("0","1"), # Factor of Interest
                                   age = mean(age),
                                   education = "0",
-                                  cigsPerDay = 0,
+                                  cigsPerDay = 0, # Non-smoker
                                   prevalentHyp = "0",
                                   diabetes = "0",
                                   totChol = mean(totChol),
@@ -266,7 +169,46 @@ male_test <- with(df, data.frame(male = c("0","1"), # Factor of Interest
                                   BMI = mean(BMI),
                                   heartRate = mean(heartRate),
                                   glucose = mean(glucose),
-                                  prevalentStroke = "0"))
+                                  prevalentStroke = c("0", "1")) 
+                   )
+
+# Convert prevalentStroke from Numeric to FACTOR
+strok_test$prevalentStroke <- as.factor(strok_test$prevalentStroke) 
+# str(strok_test)
+
+strok_test$prevalentStroke <- predict(mylogit, 
+                                      newdata = strok_test, 
+                                      type = "response")
+strok_test$prevalentStroke
+```
+
+<br>
+
+#### 1. **Odds Given Prevalence Of Stroke In family history.**
+
+1. WITH Prevalence of Stroke: `r strok_test$prevalentStroke[[2]]`
+2. NO Prevalence of Stroke: `r strok_test$prevalentStroke[[1]]`
+
+- **Odds = `r strok_test$prevalentStroke[[2]]/strok_test$prevalentStroke[[1]]`**
+
+<br>
+
+#### 2. **Odds Given For Male Vs Female**
+
+```{r include=FALSE}
+male_test <- with(df, data.frame(male = c("0","1"), # Factor of Interest
+                                 age = mean(age),
+                                 education = "0",
+                                 cigsPerDay = 0,
+                                 prevalentHyp = "0",
+                                 diabetes = "0",
+                                 totChol = mean(totChol),
+                                 sysBP = mean(sysBP),
+                                 diaBP = mean(diaBP),
+                                 BMI = mean(BMI),
+                                 heartRate = mean(heartRate),
+                                 glucose = mean(glucose),
+                                 prevalentStroke = "0"))
 
 # REMEMBER convert male_test from numeric to FACTOR
 male_test$male <- as.factor(male_test$male) 
@@ -274,23 +216,14 @@ male_test$male <- as.factor(male_test$male)
 male_test$male <- predict(mylogit, newdata = male_test, type = "response")
 ```
 
+1. Males: `r male_test$male[[2]]`
+2. Female: `r male_test$male[[1]]` 
 
-##### Predicted Probability Of Acquiring CVD for Males vs Females
-
-1. Female: `r male_test$male[[1]]` 
-2. Males: `r male_test$male[[2]]` 
-
-Odds = `r male_test$male[[2]]/male_test$male[[1]]`
-
-
-
-----
-
+- **Odds = `r male_test$male[[2]]/male_test$male[[1]]`**
 
 <br>
-<br>
 
-#### G. Odds of CVD Given Prevalence of Hypertension
+#### 3. **Odds Prevalence of Hypertension In Family History**
 
 
 ```{r include=FALSE}
@@ -315,20 +248,14 @@ hyperT_test$prevalentHyp <- predict(mylogit, newdata = hyperT_test, type = "resp
 ```
 
 
-##### Predicted Probability Of Acquiring CVD Given Prevalence of Hypertension
+1. WITH Prevalence of Hypertension: `r hyperT_test$prevalentHyp[[2]]` 
+2. NO Prevalence of Hypertension: `r hyperT_test$prevalentHyp[[1]]` 
 
-1. WITH Prevalence of Hypertension, NO: `r hyperT_test$prevalentHyp[[1]]` 
-2. WITH Prevalence of Hypertension, YES: `r hyperT_test$prevalentHyp[[2]]` 
-
-Odds = `r hyperT_test$prevalentHyp[[2]]/hyperT_test$prevalentHyp[[1]]`
-
-
-
+- **Odds = `r hyperT_test$prevalentHyp[[2]]/hyperT_test$prevalentHyp[[1]]`**
 
 <br>
-<br>
 
-#### I. Odds of CVD Given Age
+#### 4. **Odds Given Age**
 
 
 ```{r include=FALSE}
@@ -350,44 +277,168 @@ age_test$age <- predict(mylogit, newdata = age_test, type = "response")
 ```
 
 
-##### Predicted Probability Of Acquiring CVD Given Differing Ages
-
-| No. | Age (years) | Probability Given Age |       Odds Compared to 20 yr old        |
-| --: | ----------: | :-------------------: | :-------------------------------------: |
-|   1 |          20 | `r age_test$age[[1]]` | `r age_test$age[[1]]/age_test$age[[1]]` |
-|   2 |          30 | `r age_test$age[[2]]` | `r age_test$age[[2]]/age_test$age[[1]]` |
-|   3 |          40 | `r age_test$age[[3]]` | `r age_test$age[[3]]/age_test$age[[1]]` |
-|   4 |          50 | `r age_test$age[[4]]` | `r age_test$age[[4]]/age_test$age[[1]]` |
-|   5 |          60 | `r age_test$age[[5]]` | `r age_test$age[[5]]/age_test$age[[1]]` |
-|   6 |          70 | `r age_test$age[[6]]` | `r age_test$age[[6]]/age_test$age[[1]]` |
-|   7 |          80 | `r age_test$age[[7]]` | `r age_test$age[[7]]/age_test$age[[1]]` |
-
-
+| Age (years) | Probability Given Age |       Odds Compared to 20 yr old        |
+| ----------: | :-------------------: | :-------------------------------------: |
+|          20 | `r age_test$age[[1]]` | `r age_test$age[[1]]/age_test$age[[1]]` |
+|          30 | `r age_test$age[[2]]` | `r age_test$age[[2]]/age_test$age[[1]]` |
+|          40 | `r age_test$age[[3]]` | `r age_test$age[[3]]/age_test$age[[1]]` |
+|          50 | `r age_test$age[[4]]` | `r age_test$age[[4]]/age_test$age[[1]]` |
+|          60 | `r age_test$age[[5]]` | `r age_test$age[[5]]/age_test$age[[1]]` |
+|          70 | `r age_test$age[[6]]` | `r age_test$age[[6]]/age_test$age[[1]]` |
+|          80 | `r age_test$age[[7]]` | `r age_test$age[[7]]/age_test$age[[1]]` |
 
 <br>
+
+
+#### 5. **Odds Given Number Of Cigarettes Per Day**
+
+```{r include=FALSE}
+cigs_per_day <- with(df, data.frame(male = "0",
+                                    age = mean(age),
+                                    education = "0",
+                                    cigsPerDay = c(0,10,20,30,40),
+                                    prevalentHyp = "0",
+                                    diabetes = "0",
+                                    totChol = mean(totChol),
+                                    sysBP = mean(sysBP),
+                                    diaBP = mean(diaBP),
+                                    BMI = mean(BMI),
+                                    heartRate = mean(heartRate),
+                                    glucose = mean(glucose),
+                                    prevalentStroke = "0"))
+
+cigs_per_day$cigsPerDay <- predict(mylogit, newdata = cigs_per_day, type = "response")
+
+#cigs_per_day$cigsPerDay
+```
+
+
+
+| Age (years) |      Probability Given Age       |                  Odds Compared to Zero Cigarettes Per Day     |
+| ----------: | :------------------------------: | :-----------------------------------------------------------: |
+|           0 | `r cigs_per_day$cigsPerDay[[1]]` | `r cigs_per_day$cigsPerDay[[1]]/cigs_per_day$cigsPerDay[[1]]` |
+|          10 | `r cigs_per_day$cigsPerDay[[2]]` | `r cigs_per_day$cigsPerDay[[2]]/cigs_per_day$cigsPerDay[[1]]` |
+|          20 | `r cigs_per_day$cigsPerDay[[3]]` | `r cigs_per_day$cigsPerDay[[3]]/cigs_per_day$cigsPerDay[[1]]` |
+|          30 | `r cigs_per_day$cigsPerDay[[4]]` | `r cigs_per_day$cigsPerDay[[4]]/cigs_per_day$cigsPerDay[[1]]` |
+|          40 | `r cigs_per_day$cigsPerDay[[5]]` | `r cigs_per_day$cigsPerDay[[5]]/cigs_per_day$cigsPerDay[[1]]` |
+
 <br>
+
+#### 6. **Odds Given Systolic Blood Pressure**
+
+```{r include=FALSE}
+#summary(df$sysBP)
+# Min. 1st Qu.  Median    Mean  3rd Qu.  Max. 
+# 83.5   117.0   128.0   132.4   144.0   295.0 
+
+sysBP_calc <- with(df, data.frame(male = "0",
+                                  age = mean(age),
+                                  education = "0",
+                                  cigsPerDay = 0,
+                                  prevalentHyp = "0",
+                                  diabetes = "0",
+                                  totChol = mean(totChol),
+                                  sysBP = c(117, 128, 144, 295),
+                                  diaBP = mean(diaBP),
+                                  BMI = mean(BMI),
+                                  heartRate = mean(heartRate),
+                                  glucose = mean(glucose),
+                                  prevalentStroke = "0"))
+
+sysBP_calc$sysBP <- predict(mylogit, newdata = sysBP_calc, type = "response")
+
+sysBP_calc$sysBP
+```
+
+   
+| Systolic BP | Probability Given Systolic BP |                Odds Systolic BP                 |
+| ----------: | :---------------------------: | :---------------------------------------------: |
+|         117 |   `r sysBP_calc$sysBP[[1]]`   | `r sysBP_calc$sysBP[[1]]/sysBP_calc$sysBP[[1]]` |
+|         128 |   `r sysBP_calc$sysBP[[2]]`   | `r sysBP_calc$sysBP[[2]]/sysBP_calc$sysBP[[1]]` |
+|         144 |   `r sysBP_calc$sysBP[[3]]`   | `r sysBP_calc$sysBP[[3]]/sysBP_calc$sysBP[[1]]` |
+|    Max  295 |   `r sysBP_calc$sysBP[[4]]`   | `r sysBP_calc$sysBP[[4]]/sysBP_calc$sysBP[[1]]` |
+<br>
+
+#### 7. **Odds Given Glucose Levels**
+
+
+```{r include=FALSE}
+summary(df$glucose)
+#    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#     40      72      80      82      85     394 
+
+glucose_calc <- with(df, data.frame(male = "0",
+                                  age = mean(age),
+                                  education = "0",
+                                  cigsPerDay = 0,
+                                  prevalentHyp = "0",
+                                  diabetes = "0",
+                                  totChol = mean(totChol),
+                                  sysBP = mean(sysBP),
+                                  diaBP = mean(diaBP),
+                                  BMI = mean(BMI),
+                                  heartRate = mean(heartRate),
+                                  glucose = c(72, 80, 85, 394),
+                                  prevalentStroke = "0"))
+
+glucose_calc$glucose <- predict(mylogit, newdata = glucose_calc, type = "response")
+
+# glucose_calc$glucose.
+# 0.094843 0.100852 0.110194 0.239738
+```
+
+|  Glucose | Probabilities |  Odds Given Glucose   |
+| -------: | :-----------: | :-------------------: |
+|       72 |   0.094843    |           1           |
+|       80 |   0.100852    | `r 0.100852/0.094843` |
+|       85 |   0.110194    | `r 0.110194/0.094843` |
+| Max  394 |   0.239738    | `r 0.239738/0.094843` |
+
+<br>
+
 
 ## IV. Conclusion
 
 
+1.	The logistic regression model accuracy score is 0.8501. So, the model does a very good job in predicting whether or not an individual will acquire cardiovascular disease.
+
+2.	Small number of observations predict that there will be rain tomorrow. Majority of observations predict that there will be no rain tomorrow.
+
+3.	The model shows no signs of overfitting.
+
+4.	Increasing the value of C results in higher test set accuracy and also a slightly increased training set accuracy. So, we can conclude that a more complex model should perform better.
+
+5.	Increasing the threshold level results in increased accuracy.
+
+6.	ROC AUC of our model approaches towards 1. So, we can conclude that our classifier does a good job in predicting whether it will rain tomorrow or not.
+
+7.	Our original model accuracy score is 0.8501 whereas accuracy score after RFECV is 0.8500. So, we can obtain approximately similar accuracy but with reduced set of features.
 
 
 
 
 
 
+```{r eval=FALSE, include=FALSE}
+# Notes
 
+# Wald test info
+# https://www.mbaskool.com/business-concepts/statistics/6916-wald-test.html
+# https://www.statology.org/wald-test-in-r/
+# https://stats.oarc.ucla.edu/other/mult-pkg/faq/general/faqhow-are-the-likelihood-ratio-wald-and-lagrange-multiplier-score-tests-different-andor-similar/
+# https://handwiki.org/wiki/Wald_test
+# 
+# * https://questionerlab.com/what-is-the-use-of-wald-test-in-logistic-regression
+# https://stats.oarc.ucla.edu/r/dae/logit-regression/
+# 
+# * https://bookdown.org/mike/data_analysis/wald-test.html
+# 
+# * https://bookdown.org/mike/data_analysis/hypothesis-testing.html#wald-test
 
+# For analysis help
+# USE https://stats.idre.ucla.edu/r/dae/logit-regression/
 
+# For interpretation help
+# USE https://stats.idre.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/
+```
 
-
-
----
-
-
-Notes
-- USE https://stats.idre.ucla.edu/r/dae/logit-regression/
-for analysis
-
-- USE https://stats.idre.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/
-for interpretation
