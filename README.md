@@ -2,8 +2,8 @@
 
 1. Purpose: This R markdown document displays my understanding of logistic regression and R. This report is part one of two articles describing Logit. 
   
-    - [Logisitc Regression Report]( https://htmlpreview.github.io/?/mccurcio/Logistic_with_R/master/2022-01-03-fhs-logit-report.html)
-    
+    A. [Logisitc Regression Report](https://mccurcio.github.io/Logistic_with_R/2022-01-03-fhs-logit-report.html)
+    B. Under construction
 2. Data: Framingham Heart Disease Study, [FHS_data](https://github.com/mccurcio/Logistic_with_R/blob/main/fhds_dataset.zip)
 3. Conclusion: We find seven (7) factors and their related odds leading to cardiovascular disease.
 
