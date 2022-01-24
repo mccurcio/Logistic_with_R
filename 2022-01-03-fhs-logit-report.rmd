@@ -5,7 +5,49 @@ output: html_document
 ---
 
 
+<<<<<<< HEAD
 GitHub Repo: https://github.com/mccurcio/Logistic_with_R
+=======
+<br>
+
+## I. Executive Summary
+
+<br>
+
+1. This report investigates the risk factors leading to cardiovascular disease (CVD) using the Framingham Heart Study data. The study included 4,133 participants with 13 factors total over 10 years.[^1] 
+
+1. This R markdown document displays my understanding of logistic regression and R. This report is part one of two articles describing Logit. The first article is a discussion of the Logistic Regression followed by a typical report.
+
+1. We find seven (7) of the 13 factors lead to cardiovascular disease. The odds related to each factor were calculated from the study.
+
+<br>
+
+| No. | Factors                                      | Approximate Odds Over Mean               |
+| :-| :------------------------------------------- | :--------------------------------------- |
+| 1 | Prevalence Of Stroke In Family History       | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;240% |
+| 2 | Male Vs Female                               | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;150% |
+| 3 | Prevalence Of Hypertension In Family History | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;130% |
+| 4 | Age                                          | < 2,800%                                 |
+| 5 | Cigarettes Per Day                           | < &nbsp;&nbsp;&nbsp;210%                 |
+| 6 | Systolic Blood Pressure                      | < &nbsp;&nbsp;&nbsp;780%                 |
+| 7 | Glucose Levels                               | < &nbsp;&nbsp;&nbsp;250%                 |
+
+[^1]:The Framingham Heart Study: https://framinghamheartstudy.org/fhs-about/
+
+<br>
+
+## II. Discussion
+
+<br>
+
+#### A. Logistic regression is an excellent choice for this investigation:
+
+1. The outcome, the absence(0) or presence(1) of cardiovascular disease, is a binary response.
+
+1. Logistic regression does not simply predict whether a person has a disease or not. Logistic regression can help determine which variable(s) are associated with cardiovascular disease. 
+
+1. Logistic regression produces probabilities of being in one case or another. Based on our regression model, Using these probabilities, one case (P) versus (1-P), we can generalize to find the odds, $\small P/(1-P)$ for each variable.
+>>>>>>> parent of ee2508f (Minor: typos)
 
 
 ## Experimental Results
