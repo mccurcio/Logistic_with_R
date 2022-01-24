@@ -1,9 +1,10 @@
 ---
-title: "An investigation of the Framingham Heart Study"
+title: "An Investigation Of The Framingham Heart Study"
 author: "By Matthew Curcio"
 output: html_document
 ---
 
+GitHub Repo: https://github.com/mccurcio/Logistic_with_R
 
 ## 1. Experimental Results
 

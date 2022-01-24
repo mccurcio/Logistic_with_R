@@ -5,7 +5,7 @@ output: html_document
 ---
 
 
-[GitHub Repo](https://github.com/mccurcio/Logistic_with_R)
+GitHub Repo: https://github.com/mccurcio/Logistic_with_R
 
 
 ## Experimental Results
@@ -333,9 +333,7 @@ glucose_calc$glucose <- predict(mylogit, newdata = glucose_calc, type = "respons
 ## IV. Conclusion
 
 
-1.	The logistic regression model accuracy score is 0.8501. So, the model does a very good job in predicting whether or not an individual will acquire cardiovascular disease.
-
-2.	Small number of observations predict that there will be rain tomorrow. Majority of observations predict that there will be no rain tomorrow.
+1.	
 
 
 
@@ -343,26 +341,30 @@ glucose_calc$glucose <- predict(mylogit, newdata = glucose_calc, type = "respons
 
 
 
-```{r eval=FALSE, include=FALSE}
-# Notes
 
-# Wald test info
-# https://www.mbaskool.com/business-concepts/statistics/6916-wald-test.html
-# https://www.statology.org/wald-test-in-r/
-# https://stats.oarc.ucla.edu/other/mult-pkg/faq/general/faqhow-are-the-likelihood-ratio-wald-and-lagrange-multiplier-score-tests-different-andor-similar/
-# https://handwiki.org/wiki/Wald_test
-# 
-# * https://questionerlab.com/what-is-the-use-of-wald-test-in-logistic-regression
-# https://stats.oarc.ucla.edu/r/dae/logit-regression/
-# 
-# * https://bookdown.org/mike/data_analysis/wald-test.html
-# 
-# * https://bookdown.org/mike/data_analysis/hypothesis-testing.html#wald-test
+#### Notes
 
-# For analysis help
-# USE https://stats.idre.ucla.edu/r/dae/logit-regression/
 
-# For interpretation help
-# USE https://stats.idre.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/
-```
+- For analysis help
+https://stats.idre.ucla.edu/r/dae/logit-regression/
+
+- For interpretation help
+https://stats.idre.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/
+
+#### Wald test info
+https://www.mbaskool.com/business-concepts/statistics/6916-wald-test.html
+https://www.statology.org/wald-test-in-r/
+https://stats.oarc.ucla.edu/other/mult-pkg/faq/general/faqhow-are-the-likelihood-ratio-wald-and-lagrange-multiplier-score-tests-different-andor-similar/
+https://handwiki.org/wiki/Wald_test
+https://questionerlab.com/what-is-the-use-of-wald-test-in-logistic-regression
+https://stats.oarc.ucla.edu/r/dae/logit-regression/
+https://bookdown.org/mike/data_analysis/wald-test.html
+https://bookdown.org/mike/data_analysis/hypothesis-testing.html#wald-test
+
+- For analysis help
+https://stats.idre.ucla.edu/r/dae/logit-regression/
+
+- For interpretation help
+https://stats.idre.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/
+
 
