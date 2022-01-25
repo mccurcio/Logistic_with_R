@@ -1,5 +1,7 @@
 ## Logistic_with_R
 
+To view report: [An Investigation Of The Framingham Heart Study](https://github.com/mccurcio/Logistic_with_R/blob/main/2022-fhs-logit-report.pdf)
+
 1. Purpose: This R markdown document displays my understanding of logistic regression and R. This report is part one of two articles describing Logit. 
   
     A. [Logisitc Regression Report](https://mccurcio.github.io/Logistic_with_R/2022-01-03-fhs-logit-report.html)
