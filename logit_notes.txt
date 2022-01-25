@@ -1,7 +1,7 @@
 Understanding Logit
 
 
-Book: Applied Logistic REgression by David Hosmer & Stanley Lemeshow, 2000, isbn: 0-471-35632-8
+Book: Applied Logistic Regression by David Hosmer & Stanley Lemeshow, 2000, isbn: 0-471-35632-8
 
 
 1. commonly used for discrete output, binary or dichotomous
@@ -25,12 +25,12 @@ What is the goal of Logit
 1. The residuals to have constant variance, also known as homoscedasticity.
 
 
-Logistic Regression Real Life Example 
+Logistic Regression Real Life Example
 
     The transaction is fraudulent.
     The transaction is not fraudulent.
 
-- The second advantage is speed, and sometimes this is crucial. 
+- The second advantage is speed, and sometimes this is crucial.
 - logit is very explainable
 
 
