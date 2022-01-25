@@ -1,9 +1,8 @@
 ---
-title: "An investigation of the Framingham Heart Study"
+title: "An Investigation Of The Framingham Heart Study"
 author: "By Matthew Curcio"
-output: html_document
+output: pdf_document
 ---
-
 
 GitHub Repo: https://github.com/mccurcio/Logistic_with_R
 
@@ -21,7 +20,7 @@ GitHub Repo: https://github.com/mccurcio/Logistic_with_R
 | 1   | Prevalence Of Stroke In Family History       | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;240% |
 | 2   | Male Vs Female                               | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;150% |
 | 3   | Prevalence Of Hypertension In Family History | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;130% |
-| 4   | Age                                          | < 2,800%                           |
+| 4   | Age (Compared to 20 yr old)                  | < 2,800%                           |
 | 5   | Cigarettes Per Day                           | < &nbsp;&nbsp;210%                 |
 | 6   | Systolic Blood Pressure                      | < &nbsp;&nbsp;780%                 |
 | 7   | Glucose Levels                               | < &nbsp;&nbsp;250%                 |
