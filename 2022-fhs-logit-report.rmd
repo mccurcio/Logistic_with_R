@@ -20,7 +20,7 @@ GitHub Repo: https://github.com/mccurcio/Logistic_with_R
 | 1   | Prevalence Of Stroke In Family History       | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;240% |
 | 2   | Male Vs Female                               | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;150% |
 | 3   | Prevalence Of Hypertension In Family History | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;130% |
-| 4   | Age (Compared to 20 yr old)                  | < 2,800%                           |
+| 4   | Age  (80 yr Compared to 20 yr old Male)      | < 2,800%                           |
 | 5   | Cigarettes Per Day                           | < &nbsp;&nbsp;210%                 |
 | 6   | Systolic Blood Pressure                      | < &nbsp;&nbsp;780%                 |
 | 7   | Glucose Levels                               | < &nbsp;&nbsp;250%                 |
@@ -33,7 +33,7 @@ options(tinytex.verbose = FALSE)
 options(digits = 5) 
 
 #Load Libraries
-Libraries <- c("knitr", "readr", "aod")
+Libraries <- c("knitr", "readr")
 for (p in Libraries) { 
     library(p, character.only = TRUE)
 }
@@ -347,7 +347,7 @@ glucose_calc$glucose <- predict(mylogit, newdata = glucose_calc, type = "respons
 <br>
 
 
-## IV. Conclusion
+## 3. Conclusion
 
 1. We find seven (7) of the 13 factors lead to cardiovascular disease. The odds related to each factor were calculated from the study.
 
@@ -367,7 +367,7 @@ glucose_calc$glucose <- predict(mylogit, newdata = glucose_calc, type = "respons
 
 3. A pack of cigarettes gave a person 45% increase of acquiring Cardiovascular disease, **using this data set. This seems oddly low.**
 
-| Cigarettes Per Day | Probability Given Age | Odds Compared to Zero Cigarettes Per Day |
+| Cigs Per Day | Probability Given Age | Odds Compared to Zero Cigarettes Per Day |
 | -: | :----: | :-----------------------------------------------------------: |
 | 0 | `r cigs_per_day$cigsPerDay[[1]]` | `r cigs_per_day$cigsPerDay[[1]]/cigs_per_day$cigsPerDay[[1]]` |
 | 10 | `r cigs_per_day$cigsPerDay[[2]]` | `r cigs_per_day$cigsPerDay[[2]]/cigs_per_day$cigsPerDay[[1]]` |
